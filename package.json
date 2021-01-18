@@ -1,0 +1,41 @@
+{
+  "name": "definitely-not-dnd-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
+    "start": "set NODE_ENV=production&&node index.js",
+    "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
+    "types": "tsc",
+    "update-client": "cd client/definitely-not-dnd&&git fetch --all&& git reset @{u}",
+    "build-client": "cd client/definitely-not-dnd&& npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "express-jwt-authz": "^2.4.1",
+    "jwks-rsa": "^1.12.2",
+    "mongoose": "^5.11.10",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
+    "@babel/register": "^7.12.10",
+    "@types/cors": "^2.8.9",
+    "ts-node-dev": "^1.1.1"
+  }
+}
