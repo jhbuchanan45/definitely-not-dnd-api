@@ -1,0 +1,53 @@
+version: "2"
+services:
+  api:
+    container_name: api
+    restart: always
+    build: ../
+    links:
+      - mongo
+    env_file:
+      - ../.env-docker
+    depends_on:
+      - mongo
+    expose: 
+      - "80"
+  api2:
+    container_name: api2
+    restart: always
+    build: ../
+    links:
+      - mongo
+    env_file:
+      - ../.env-docker
+    depends_on:
+      - mongo
+    expose: 
+      - "80"
+  mongo:
+    container_name: mongo
+    image: mongo:4.4.3-bionic
+    volumes:
+      - ./mongodata:/data/db
+    expose:
+      - "27017"
+  nginx:
+    image: nginx:1.15-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - api
+      - api2
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot

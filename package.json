@@ -10,7 +10,9 @@
     "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
     "types": "tsc",
     "update-client": "cd client/definitely-not-dnd&&git fetch --all&& git reset @{u}",
-    "build-client": "cd client/definitely-not-dnd&& npm run build"
+    "build-client": "cd client/definitely-not-dnd&& npm run build",
+    "deploy-client": "cd client/definitely-not-dnd&& npm run build&&cd ../..&&npm run dockerise",
+    "dockerise": "cd dockerise&& docker-compose up --build -d"
   },
   "keywords": [],
   "author": "",

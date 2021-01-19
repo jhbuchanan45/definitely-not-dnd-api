@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/data
 
 # production
 /build
@@ -21,6 +22,9 @@
 .env.production.local
 /ssh-keys
 .eslintcache
+.env-docker
+/dockerise/data
+/dockerise/mongodata
 
 npm-debug.log*
 yarn-debug.log*
