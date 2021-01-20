@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-const keyStats = new Schema({
+const keyStats = {
     END: Number,
     STR: Number,
     CHA: Number,
@@ -10,19 +10,19 @@ const keyStats = new Schema({
     KNW: Number,
     WIS: Number,
     INT: Number,
-})
+}
 
-const altStats = new Schema({
+const altStats = {
     dge: Number,
     bHP: Number,
     arm: Number,
-})
+}
 
-const resistStats = new Schema({
+const resistStats = {
     phy: Number,
     rng: Number,
     mag: Number,
-})
+}
 
 const Token = new Schema({
     ownerId: String,

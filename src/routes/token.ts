@@ -4,8 +4,14 @@ import token from '../models/token';
 
 const tokenRoutes = express.Router();
 
-tokenRoutes.get('/', tokenController.getTokens);
+tokenRoutes.get('/', tokenController.get);
 
-tokenRoutes.post('/', tokenController.createToken);
+tokenRoutes.post('/', tokenController.create);
+
+tokenRoutes.put('/:tokenID', tokenController.update);
+
+tokenRoutes.delete('/:tokenID', tokenController.delete);
+
+tokenRoutes.get('/:tokenID', tokenController.getById);
 
 export default tokenRoutes;
