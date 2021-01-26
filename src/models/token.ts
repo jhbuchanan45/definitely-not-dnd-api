@@ -3,34 +3,34 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const keyStats = {
-    END: Number,
-    STR: Number,
-    CHA: Number,
-    FNS: Number,
-    KNW: Number,
-    WIS: Number,
-    INT: Number,
+    END: {type: Number, default: 0},
+    STR: {type: Number, default: 0},
+    CHA: {type: Number, default: 0},
+    FNS: {type: Number, default: 0},
+    KNW: {type: Number, default: 0},
+    WIS: {type: Number, default: 0},
+    INT: {type: Number, default: 0},
 }
 
 const altStats = {
-    dge: Number,
-    bHP: Number,
-    arm: Number,
+    dge: {type: Number, default: 0},
+    bHP: {type: Number, default: 0},
+    arm: {type: Number, default: 0},
 }
 
 const resistStats = {
-    phy: Number,
-    rng: Number,
-    mag: Number,
+    phy: {type: Number, default: 0},
+    rng: {type: Number, default: 0},
+    mag: {type: Number, default: 0},
 }
 
 const Token = new Schema({
-    ownerId: String,
-    image: String,
-    name: String,
-    race: String,
+    ownerId: {type: String, required: true},
+    image: {type: String, required: true, default: ""},
+    name: {type: String, required: true, default: "None"},
+    race: {type: String, required: true, default: "None"},
     stats: {
-        level: Number,
+        level: {type: Number, default: 0},
         key: {
             base: keyStats,
             modifier: keyStats,
@@ -39,17 +39,17 @@ const Token = new Schema({
         resist: resistStats,
     },
     status: {
-        cHP: Number,
-        mHP: Number,
-        mStm: Number,
-        cStm: Number
+        cHP: {type: Number, default: 0},
+        mHP: {type: Number, default: 0},
+        mStm: {type: Number, default: 0},
+        cStm: {type: Number, default: 0}
     },
     effects: {
-        burning: Boolean,
-        bleeding: Boolean,
+        burning: {type: Boolean, default: false},
+        bleeding: {type: Boolean, default: false},
     },
-    pos: {x: Number, y: Number},
-    size: Number,
+    pos: {x: {type: Number, default: 0}, y: {type: Number, default: 0}},
+    size: {type: Number, default: 0},
 }, { typePojoToMixed: false, collection: "tokens" });
 
 export default mongoose.model('Token', Token);

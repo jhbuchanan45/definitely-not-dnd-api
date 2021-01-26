@@ -31,6 +31,8 @@ services:
       - ./mongodata:/data/db
     expose:
       - "27017"
+    ports:
+      - "27017:27017"
   nginx:
     image: nginx:1.15-alpine
     ports:
