@@ -13,6 +13,7 @@ import checkJwt from './middlewares/checkJWT';
 import userRoutes from './routes/user';
 import tokenRoutes from './routes/token';
 import mapRoutes from './routes/map';
+import campaignRoutes from './routes/campaign';
 
 const PORT = process.env.PORT || 3000;
 
@@ -38,6 +39,8 @@ app.use('/api/user', checkJwt, userRoutes);
 app.use('/api/token', checkJwt, tokenRoutes);
 
 app.use('/api/map', checkJwt, mapRoutes);
+
+app.use('/api/campaign', checkJwt, campaignRoutes);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/definitely-not-dnd/build', 'index.html'))

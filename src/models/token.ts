@@ -29,6 +29,7 @@ const Token = new Schema({
     image: {type: String, required: true, default: ""},
     name: {type: String, required: true, default: "None"},
     race: {type: String, required: true, default: "None"},
+    player: {type: String, required: true, default: ""},
     stats: {
         level: {type: Number, default: 0},
         key: {

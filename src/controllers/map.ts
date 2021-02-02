@@ -137,22 +137,15 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const mapID = req.params.mapID;
 
-        try {
-            const map = await Map.findByIdAndDelete(mapID, {}, (err, docs) => {
-                if (err) {
-                    console.log(err);
-                    next(err);
-                }
-                else {
-                    console.log("Deleted: ", docs);
-                    res.status(204).end("Deleted Map");
-                }
-            });
-
-        } catch (error) {
-            console.log(error);
-            next(error);
-        }
+        Map.findOneAndDelete({_id: mapID, ownerId: req.user.sub})
+        .then((map) => {
+            console.log("Deleted: ", map)
+            res.status(204).end("Deleted Map")
+        })
+        .catch(err => {
+            console.log(err);
+            next(err);
+        })
     },
 
     deleteAll: async (req: any, res: any, next: any) => {

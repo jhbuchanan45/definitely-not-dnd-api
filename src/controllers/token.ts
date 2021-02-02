@@ -139,22 +139,15 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const tokenID = req.params.tokenID;
 
-        try {
-            const token = await Token.findByIdAndDelete(tokenID, {}, (err, docs) => {
-                if (err) {
-                    console.log(err);
-                    next(err);
-                }
-                else {
-                    console.log("Deleted : ", docs);
-                    res.status(204).end("Deleted Token");
-                }
-            });
-
-        } catch (error) {
-            console.log(error);
-            next(error);
-        }
+        Token.findOneAndDelete({_id: tokenID, ownerId: req.user.sub})
+        .then((token) => {
+            console.log("Deleted: ", token)
+            res.status(204).end("Deleted Token")
+        })
+        .catch(err => {
+            console.log(err);
+            next(err);
+        })
     },
 
     deleteAll: async (req: any, res: any, next: any) => {

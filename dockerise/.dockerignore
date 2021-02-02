@@ -1,0 +1,5 @@
+*
+
+!.env-docker
+!docker-compose.yml
+!init-letsencrypt.sh
