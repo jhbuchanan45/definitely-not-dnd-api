@@ -23,9 +23,9 @@
 /ssh-keys
 .eslintcache
 .env-docker
-/dockerise/data
+/dockerise/data/*
 /dockerise/mongodata
-
+!/dockerise/data/nginx
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

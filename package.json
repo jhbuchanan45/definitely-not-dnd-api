@@ -12,7 +12,8 @@
     "update-client": "cd client/definitely-not-dnd&&git fetch --all&& git reset @{u}",
     "build-client": "cd client/definitely-not-dnd&& npm run build",
     "deploy-client": "cd client/definitely-not-dnd&& npm run build&&cd ../..&&npm run dockerise",
-    "dockerise": "npm run build&& cd dockerise&& docker-compose up --build -d"
+    "dockerise": "npm run build&& cd dockerise&& docker-compose up --build -d",
+    "undockerise": "cd dockerise&& docker-compose stop"
   },
   "keywords": [],
   "author": "",
