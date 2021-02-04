@@ -21,6 +21,6 @@ let Map = new Schema({
     pos: { x: Number, y: Number, default: { x: 0, y: 0 } },
     sidebarExpanded: { type: Boolean, default: true }
 },
-    { typePojoToMixed: false, collection: "maps" });
+    { typePojoToMixed: false});
 
 export default mongoose.model('Map', Map);

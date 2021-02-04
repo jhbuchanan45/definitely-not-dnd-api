@@ -1,5 +1,8 @@
 import express from 'express';
-import tokenController from '../controllers/token';
+import { generateTokenTypes } from '../controllers/token';
+import Token from '../models/token'
+
+const tokenController = generateTokenTypes(Token);
 
 const tokenRoutes = express.Router();
 

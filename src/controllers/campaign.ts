@@ -4,20 +4,18 @@ export default {
     get: async (req: any, res: any) => {
 
         // query to get campaigns belonging to the user
-        Campaign.find().or([{ ownerId: req.user.sub }, { players: req.user.sub }]).exec()
+        Campaign.find({},'-__v').or([{ ownerId: req.user.sub }, { playerId: req.user.sub }]).populate('players', 'name image stats.level race').exec()
             .then(campaigns => {
 
-                // log and send back campaigns
-                console.log(campaigns);
+                // send back campaigns
                 res.json(campaigns)
 
             }).catch(err => {
 
                 // on error send back error message or generic error message 
                 res.status(500).send({
-                    message: err.message || "Some error occurred while getting campaigns."
+                    message: err.message || "Error occurred while getting campaigns."
                 })
-
             })
     },
 
@@ -30,7 +28,6 @@ export default {
             return res.status(400).send({
                 message: "Campaign cannot be blank."
             })
-
         } else {
 
             // if campaign included in request, assign that to the variable
@@ -46,7 +43,9 @@ export default {
 
         // attempt to save campaign
         nCampaign.save()
-            .then(campaign => {
+            .then(campaignDoc => {
+
+                const {__v, ...campaign}:any = campaignDoc.toObject()
 
                 // return newly created campaign to client
                 // useful since client needs some of the properties assigned when creating the model (eg _id)
@@ -66,7 +65,7 @@ export default {
         const campaignID = req.params.campaignID;
 
         // attempt to find a campaign with the specified ID which belongs to the requesting user
-        Campaign.findOne({ _id: campaignID, ownerId: req.user.sub })
+        Campaign.findOne({ _id: campaignID, $or: [{ ownerId: req.user.sub }, { playerId: req.user.sub }] },'-__v').populate('players', 'name image stats.level race').exec()
             .then(campaign => {
 
                 // if no campaign was found throw an error
@@ -102,7 +101,7 @@ export default {
 
             // if no campaign was actually sent, respond with error
             return res.status(400).send({
-                message: "campaign data cannot be blank."
+                message: "Campaign data cannot be blank."
             })
 
         } else {
@@ -114,7 +113,7 @@ export default {
 
         // update campaign with given ID owned by the user
         // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-        Campaign.findOneAndUpdate({ _id: campaignID, ownerId: req.user.sub }, { ...eCampaign }, { new: true })
+        Campaign.findOneAndUpdate({ _id: campaignID, ownerId: req.user.sub }, { ...eCampaign }, { new: true, projection: '-__v' })
             .then(campaign => {
 
                 // return updated campaign ({new: true} query option ensures updated campaign not old is passed here)
@@ -158,18 +157,4 @@ export default {
                 next(err);
             })
     },
-
-    getByIDs: async (req: any, res: any, next: any) => {
-        const campaignIds = req.body.IDs;
-
-        Campaign.find({ _id: { $in: [...campaignIds] } })
-            .then((campaigns) => {
-                console.log(campaigns)
-                res.json(campaigns)
-            })
-            .catch(err => {
-                console.log(err);
-                next(err);
-            })
-    }
 }
