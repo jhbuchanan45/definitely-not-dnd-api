@@ -1,10 +1,16 @@
 import Campaign from '../models/campaign';
 
+// populate query
+const populateQuery = [
+    { path: 'players', select: 'name image stats.level race' },
+    { path: 'lastMap', select: 'name image' }
+]
+
 export default {
     get: async (req: any, res: any) => {
 
         // query to get campaigns belonging to the user
-        Campaign.find({},'-__v').or([{ ownerId: req.user.sub }, { playerId: req.user.sub }]).populate('players', 'name image stats.level race').exec()
+        Campaign.find({}, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }]).populate(populateQuery).exec()
             .then(campaigns => {
 
                 // send back campaigns
@@ -31,21 +37,26 @@ export default {
         } else {
 
             // if campaign included in request, assign that to the variable
-            rCampaign = req.body.campaign;
+            const fullCampaign: any = req.body.campaign
+            const { players, ...cleanCampaign } = fullCampaign;
+            rCampaign = cleanCampaign;
 
         }
 
-        // get id
+        // get id and set initial read/write permissions
         rCampaign.ownerId = req.user.sub;
 
         // create new campaign model using schema
-        const nCampaign = new Campaign({ ...rCampaign })
+        const nCampaign: any = new Campaign({ ...rCampaign })
+
+        if (nCampaign.readIds.indexOf(req.user.sub) === -1) { nCampaign.readIds.push(req.user.sub) };
+        if (nCampaign.writeIds.indexOf(req.user.sub) === -1) { nCampaign.writeIds.push(req.user.sub) };
 
         // attempt to save campaign
-        nCampaign.save()
+        await nCampaign.save()
             .then(campaignDoc => {
 
-                const {__v, ...campaign}:any = campaignDoc.toObject()
+                const { __v, ...campaign }: any = campaignDoc.toObject()
 
                 // return newly created campaign to client
                 // useful since client needs some of the properties assigned when creating the model (eg _id)
@@ -65,7 +76,7 @@ export default {
         const campaignID = req.params.campaignID;
 
         // attempt to find a campaign with the specified ID which belongs to the requesting user
-        Campaign.findOne({ _id: campaignID, $or: [{ ownerId: req.user.sub }, { playerId: req.user.sub }] },'-__v').populate('players', 'name image stats.level race').exec()
+        Campaign.findOne({ _id: campaignID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v').populate(populateQuery).exec()
             .then(campaign => {
 
                 // if no campaign was found throw an error
@@ -107,20 +118,27 @@ export default {
         } else {
 
             // if campaign included in request, assign that to the variable
-            eCampaign = req.body.campaign;
-
+            const fullCampaign: any = req.body.campaign
+            const { players, ...cleanCampaign } = fullCampaign;
+            eCampaign = cleanCampaign;
         }
 
-        // update campaign with given ID owned by the user
-        // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-        Campaign.findOneAndUpdate({ _id: campaignID, ownerId: req.user.sub }, { ...eCampaign }, { new: true, projection: '-__v' })
-            .then(campaign => {
+        // update campaign with given ID if the user has write privileges
+        await Campaign.findOne({ _id: campaignID, writeIds: req.user.sub })
+            .then(async (campaign) => {
+                if (!campaign) {
+                    throw new Error('No campaign exists with that ID')
+                }
 
-                // return updated campaign ({new: true} query option ensures updated campaign not old is passed here)
+                campaign.set({ ...eCampaign });
+
                 console.log("Updated Campaign:\n" + campaign);
+                return await campaign.save()
+            })
+            .then(campaign => {
                 res.json(campaign);
-
-            }).catch(err => {
+            })
+            .catch(err => {
 
                 // handle any errors
                 // TODO - Write error handler in express to do this properly (somehow -_-)
@@ -136,10 +154,13 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const campaignID = req.params.campaignID;
 
-        Campaign.findOneAndDelete({ _id: campaignID, ownerId: req.user.sub })
-            .then((campaign) => {
-                console.log("Deleted: ", campaign)
-                res.status(204).end("Deleted Campaign")
+        Campaign.findOne({ _id: campaignID, writeIds: req.user.sub })
+            .then(async (campaign) => {
+                return await campaign?.remove();
+            })
+            .then(() => {
+                console.log("Deleted campaign");
+                res.status(204).end("Deleted Campaign");
             })
             .catch(err => {
                 console.log(err);
@@ -148,8 +169,9 @@ export default {
     },
 
     deleteAll: async (req: any, res: any, next: any) => {
-        Campaign.deleteMany({ ownerId: req.user.sub })
-            .then(() => {
+        Campaign.find({ ownerId: req.user.sub })
+            .then(async (campaigns) => {
+                campaigns.forEach(async (campaign) => { await campaign.remove() })
                 res.status(200).end();
             })
             .catch((err) => {

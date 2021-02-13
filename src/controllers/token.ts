@@ -11,7 +11,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
         get: async (req: any, res: any) => {
 
             // query to get tokens belonging to the user
-            Token.find({ ownerId: req.user.sub },'-__v').exec()
+            Token.find({ campaignId: req.params.campaignId }, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }]).exec()
                 .then(tokens => {
 
                     // log and send back tokens
@@ -22,7 +22,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
 
                     // on error send back error message or generic error message 
                     res.status(500).send({
-                        message: err.message || "Some error occurred while getting tokens."
+                        message: err.message || "Some error occurred while getting tokens. (Check campaign ID)"
                     })
 
                 })
@@ -44,9 +44,8 @@ export const generateTokenTypes = (Token: Model<any>) => {
                 // if token included in request, assign that to the variable
                 const fullToken:any = req.body.token
                 console.log("hey from create before cleaning")
-                const {playerId,...cleanToken} = fullToken;
+                const {readIds, writeIds,...cleanToken} = fullToken;
                 rToken = cleanToken;
-                console.log("hey from create")
             }
 
             // get id
@@ -57,15 +56,6 @@ export const generateTokenTypes = (Token: Model<any>) => {
 
             // attempt to save token
             nToken.save()
-                .then(async (token: any) => {
-
-                    // if player route then also update the campaign playerID array
-                    if (Token.modelName === 'Player') {
-                        await Campaign.findOneAndUpdate({ _id: token.campaignId, ownerId: req.user.sub }, { $push: { players: token._id } })
-                    }
-
-                    return token
-                })
                 .then(tokenDoc => {
 
                     const {__v, ...token}:any = tokenDoc.toObject()
@@ -87,7 +77,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
             const tokenID = req.params.tokenID;
 
             // attempt to find a token with the specified ID which belongs to the requesting user
-            Token.findOne({ _id: tokenID, ownerId: req.user.sub }, '-__v')
+            Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v')
                 .then(token => {
 
                     // if no token was found throw an error
@@ -129,20 +119,30 @@ export const generateTokenTypes = (Token: Model<any>) => {
             } else {
 
                 // if token included in request, assign that to the variable
-                eToken = req.body.token;
+                const fullToken:any = req.body.token
+                const {readIds, writeIds, campaignId,...cleanToken} = fullToken;
+                eToken = cleanToken;
 
             }
 
             // update token with given ID owned by the user
             // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-            Token.findOneAndUpdate({ _id: tokenID, ownerId: req.user.sub }, { ...eToken }, { new: true, projection: '-__v' })
+            await Token.findOne({ _id: tokenID, writeIds: req.user.sub })
+                .then(async (token) => {
+                    if (!token) {
+                        throw new Error('No token exists with that ID')
+                    }
+
+                    token.set({...eToken});
+
+                    return await token.save();
+                })
                 .then(token => {
-
-                    // return updated token ({new: true} query option ensures updated token not old is passed here)
-                    console.log("Updated token:\n" + token);
-                    res.json(token);
-
-                }).catch(err => {
+                     // return updated token ({new: true} query option ensures updated token not old is passed here)
+                     console.log("Updated token:\n" + token);
+                     res.json(token);
+                })
+                .catch(err => {
 
                     // handle any errors
                     // TODO - Write error handler in express to do this properly (somehow -_-)
@@ -150,7 +150,6 @@ export const generateTokenTypes = (Token: Model<any>) => {
                     res.status(500).send({
                         message: "Error getting token with id " + tokenID
                     })
-
                 })
 
         },
@@ -158,8 +157,11 @@ export const generateTokenTypes = (Token: Model<any>) => {
         delete: async (req: any, res: any, next: any) => {
             const tokenID = req.params.tokenID;
 
-            Token.findOneAndDelete({ _id: tokenID, ownerId: req.user.sub })
-                .then((token) => {
+            Token.findOne({ _id: tokenID, writeIds: req.user.sub })
+                .then(async (token) => {
+                    return await token.remove();
+                })
+                .then(token => {
                     console.log("Deleted: ", token)
                     res.status(204).end("Deleted Token")
                 })
@@ -170,14 +172,15 @@ export const generateTokenTypes = (Token: Model<any>) => {
         },
 
         deleteAll: async (req: any, res: any, next: any) => {
-            Token.deleteMany({ ownerId: req.user.sub })
-                .then(() => {
-                    res.status(200).end();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    next(err);
-                })
+            Token.find({ ownerId: req.user.sub })
+            .then(async (tokens) => {
+                tokens.forEach(async (token) => { await token.remove() })
+                res.status(200).end();
+            })
+            .catch((err) => {
+                console.log(err);
+                next(err);
+            })
         }
     }
 }

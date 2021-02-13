@@ -1,10 +1,10 @@
-import Map from '../models/map';
+import MapInfo from '../models/map';
 
 export default {
     get: async (req: any, res: any) => {
 
         // query to get maps belonging to the user
-        Map.find({ ownerId: req.user.sub }).exec()
+        MapInfo.find({ campaignId: req.params.campaignId }, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }]).exec()
             .then(maps => {
 
                 // log and send back maps
@@ -28,13 +28,16 @@ export default {
 
             // if no map was actually sent, respond with error
             return res.status(400).send({
-                message: "Map cannot be blank."
+                message: "MapInfo cannot be blank."
             })
 
         } else {
 
             // if map included in request, assign that to the variable
-            rMap = req.body.map;
+            const fullMap:any = req.body.map
+            
+            const {readIds, writeIds,...cleanMap} = fullMap;
+            rMap = cleanMap;
 
         }
 
@@ -42,12 +45,13 @@ export default {
         rMap.ownerId = req.user.sub;
 
         // create new map model using schema
-        const nMap = new Map({ ...rMap })
+        const nMap = new MapInfo({ ...rMap })
 
         // attempt to save map
         nMap.save()
-            .then(map => {
+            .then(mapDoc => {
 
+                const {__v, ...map} = mapDoc.toObject();
                 // return newly created map to client
                 // useful since client needs some of the properties assigned when creating the model (eg _id)
                 res.json(map);
@@ -66,7 +70,7 @@ export default {
         const mapID = req.params.mapID;
 
         // attempt to find a map with the specified ID which belongs to the requesting user
-        Map.findOne({ _id: mapID, ownerId: req.user.sub })
+        MapInfo.findOne({ _id: mapID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v')
             .then(map => {
 
                 // if no map was found throw an error
@@ -102,26 +106,36 @@ export default {
 
             // if no map was actually sent, respond with error
             return res.status(400).send({
-                message: "Map data cannot be blank."
+                message: "MapInfo data cannot be blank."
             })
 
         } else {
 
             // if map included in request, assign that to the variable
-            eMap = req.body.map;
-
+            const fullMap:any = req.body.map
+            
+            const {readIds, writeIds,...cleanMap} = fullMap;
+            eMap = cleanMap;
         }
 
         // update map with given ID owned by the user
         // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-        Map.findOneAndUpdate({ _id: mapID, ownerId: req.user.sub }, { ...eMap }, { new: true })
+        await MapInfo.findOne({ _id: mapID, writeIds: req.user.sub })
+            .then(async (map) => {
+                if (!map) {
+                    throw new Error('No map exists with that ID')
+                }
+                
+                map.set({...eMap});
+
+                return await map.save();
+            })
             .then(map => {
 
-                // return updated map ({new: true} query option ensures updated map not old is passed here)
                 console.log("Updated map:\n" + map);
                 res.json(map);
-
-            }).catch(err => {
+            })
+            .catch(err => {
 
                 // handle any errors
                 // TODO - Write error handler in express to do this properly (somehow -_-)
@@ -129,7 +143,6 @@ export default {
                 res.status(500).send({
                     message: "Error getting map with id " + mapID
                 })
-
             })
 
     },
@@ -137,10 +150,13 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const mapID = req.params.mapID;
 
-        Map.findOneAndDelete({_id: mapID, ownerId: req.user.sub})
+        MapInfo.findOne({_id: mapID, writeIds: req.user.sub})
+        .then(async (map:any) => {
+            return await map.remove()
+        })
         .then((map) => {
             console.log("Deleted: ", map)
-            res.status(204).end("Deleted Map")
+            res.status(204).end("Deleted MapInfo")
         })
         .catch(err => {
             console.log(err);
@@ -149,13 +165,14 @@ export default {
     },
 
     deleteAll: async (req: any, res: any, next: any) => {
-        Map.deleteMany({ownerId: req.user.sub})
-        .then(() => {
-            res.status(200).end();
-        })
-        .catch((err) => {
-            console.log(err);
-            next(err);
-        })
+        MapInfo.find({ ownerId: req.user.sub })
+            .then(async (maps) => {
+                maps.forEach(async (map) => { await map.remove() })
+                res.status(200).end();
+            })
+            .catch((err) => {
+                console.log(err);
+                next(err);
+            })
     }
 }
