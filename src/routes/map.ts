@@ -1,10 +1,9 @@
 import express from 'express';
 import mapController from '../controllers/map';
-import map from '../models/map';
 
 const mapRoutes = express.Router();
 
-mapRoutes.get('/', mapController.get);
+mapRoutes.get('/campaign/:campaignId', mapController.get);
 
 mapRoutes.post('/', mapController.create);
 
