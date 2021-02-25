@@ -29,9 +29,6 @@ mongoose.connect(`mongodb://${process.env.DB_HOST}`, {
     process.exit();
 })
 
-app.use(express.static(path.join(__dirname, '../client/definitely-not-dnd/build')));
-
-
 app.use(cors());
 app.use(express.json({ limit: '5mb' }));
 
@@ -44,10 +41,6 @@ app.use('/api/map', checkJwt, mapRoutes);
 app.use('/api/campaign', checkJwt, campaignRoutes);
 
 app.use('/api/player', checkJwt, playerRoutes);
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/definitely-not-dnd/build', 'index.html'))
-})
 
 app.listen(PORT, () => {
     console.log("Server is listening on port " + PORT);

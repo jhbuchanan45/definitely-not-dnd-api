@@ -6,7 +6,7 @@ const tokenController = generateTokenTypes(Player);
 
 const playerRoutes = express.Router();
 
-playerRoutes.get('/', tokenController.get);
+playerRoutes.get('/campaign/:campaignId', tokenController.get);
 
 playerRoutes.post('/', tokenController.create);
 
