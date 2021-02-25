@@ -15,6 +15,9 @@
     "dockerise": "npm run build&& cd dockerise&& docker-compose up --build -d",
     "undockerise": "cd dockerise&& docker-compose stop"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

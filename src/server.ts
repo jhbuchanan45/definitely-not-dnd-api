@@ -18,7 +18,7 @@ import playerRoutes from './routes/player';
 
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect(`mongodb://${process.env.DB_HOST}`, {
+mongoose.connect(`${process.env.DB_HOST}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
