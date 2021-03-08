@@ -1,4 +1,5 @@
 import Campaign from '../models/campaign';
+import User from '../models/user';
 
 // populate query
 const populateQuery = [
@@ -124,7 +125,7 @@ export default {
         }
 
         // update campaign with given ID if the user has write privileges
-        await Campaign.findOne({ _id: campaignID, writeIds: req.user.sub })
+        await Campaign.findOne({ _id: campaignID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
             .then(async (campaign) => {
                 if (!campaign) {
                     throw new Error('No campaign exists with that ID')
@@ -134,6 +135,13 @@ export default {
 
                 console.log("Updated Campaign:\n" + campaign);
                 return await campaign.save()
+            })
+            .then(async (campaign) => {
+                const user = await User.findOne({ ownerId: req.user.sub});
+                user?.set({lastCampaign: campaign._id});
+                await user?.save();
+
+                return campaign;
             })
             .then(campaign => {
                 res.json(campaign);
@@ -154,7 +162,7 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const campaignID = req.params.campaignID;
 
-        Campaign.findOne({ _id: campaignID, writeIds: req.user.sub })
+        Campaign.findOne({ _id: campaignID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
             .then(async (campaign) => {
                 return await campaign?.remove();
             })

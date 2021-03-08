@@ -4,7 +4,7 @@ const app = express();
 import cors from 'cors';
 import mongoose from 'mongoose';
 import jwtAuthz from 'express-jwt-authz';
-import path from 'path';
+// import path from 'path';
 
 // import middlewares
 import checkJwt from './middlewares/checkJWT';

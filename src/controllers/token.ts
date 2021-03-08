@@ -1,5 +1,3 @@
-// import Token from '../models/token';
-import Campaign from '../models/campaign';
 import { Model } from 'mongoose';
 
 // to avoid boilerplate for very similar token controllers, each route will 
@@ -42,9 +40,9 @@ export const generateTokenTypes = (Token: Model<any>) => {
             } else {
 
                 // if token included in request, assign that to the variable
-                const fullToken:any = req.body.token
+                const fullToken: any = req.body.token
                 console.log("hey from create before cleaning")
-                const {readIds, writeIds,...cleanToken} = fullToken;
+                const { readIds, writeIds, ...cleanToken } = fullToken;
                 rToken = cleanToken;
             }
 
@@ -58,7 +56,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
             nToken.save()
                 .then(tokenDoc => {
 
-                    const {__v, ...token}:any = tokenDoc.toObject()
+                    const { __v, ...token }: any = tokenDoc.toObject()
                     // return newly created token to client
                     // useful since client needs some of the properties assigned when creating the model (eg _id)
                     res.json(token);
@@ -119,28 +117,28 @@ export const generateTokenTypes = (Token: Model<any>) => {
             } else {
 
                 // if token included in request, assign that to the variable
-                const fullToken:any = req.body.token
-                const {readIds, writeIds, campaignId,...cleanToken} = fullToken;
+                const fullToken: any = req.body.token
+                const { readIds, writeIds, campaignId, ...cleanToken } = fullToken;
                 eToken = cleanToken;
 
             }
 
             // update token with given ID owned by the user
             // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-            await Token.findOne({ _id: tokenID, writeIds: req.user.sub })
+            await Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
                 .then(async (token) => {
                     if (!token) {
                         throw new Error('No token exists with that ID')
                     }
 
-                    token.set({...eToken});
+                    token.set({ ...eToken });
 
                     return await token.save();
                 })
                 .then(token => {
-                     // return updated token ({new: true} query option ensures updated token not old is passed here)
-                     console.log("Updated token:\n" + token);
-                     res.json(token);
+                    // return updated token ({new: true} query option ensures updated token not old is passed here)
+                    console.log("Updated token:\n" + token);
+                    res.json(token);
                 })
                 .catch(err => {
 
@@ -157,7 +155,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
         delete: async (req: any, res: any, next: any) => {
             const tokenID = req.params.tokenID;
 
-            Token.findOne({ _id: tokenID, writeIds: req.user.sub })
+            Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
                 .then(async (token) => {
                     return await token.remove();
                 })
@@ -173,14 +171,14 @@ export const generateTokenTypes = (Token: Model<any>) => {
 
         deleteAll: async (req: any, res: any, next: any) => {
             Token.find({ ownerId: req.user.sub })
-            .then(async (tokens) => {
-                tokens.forEach(async (token) => { await token.remove() })
-                res.status(200).end();
-            })
-            .catch((err) => {
-                console.log(err);
-                next(err);
-            })
+                .then(async (tokens) => {
+                    tokens.forEach(async (token) => { await token.remove() })
+                    res.status(200).end();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    next(err);
+                })
         }
     }
 }

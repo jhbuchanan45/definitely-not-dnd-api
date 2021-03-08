@@ -6,6 +6,8 @@ WORKDIR /usr/src/api
 
 COPY package.json /usr/src/api
 
+COPY models/ /usr/src/api/models
+
 RUN npm install --production --silent
 
 COPY . /usr/src/api

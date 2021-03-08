@@ -1,6 +1,6 @@
 import express from 'express';
 import { generateTokenTypes } from '../controllers/token';
-import Token from '../models/token'
+import Token from '../models/token';
 
 const tokenController = generateTokenTypes(Token);
 

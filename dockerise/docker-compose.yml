@@ -2,7 +2,6 @@ version: "2"
 services:
   api:
     container_name: api
-    restart: unless-stopped
     build: ../
     links:
       - mongo
@@ -14,7 +13,6 @@ services:
       - "80"
   api2:
     container_name: api2
-    restart: unless-stopped
     build: ../
     links:
       - mongo

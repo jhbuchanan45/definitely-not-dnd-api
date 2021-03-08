@@ -1,17 +1,8 @@
 import mongoose from 'mongoose';
+import { Campaign } from '@jhbuchanan45/dnd-models';
 import Token, { Player } from './token';
 import Map from './map';
-
-const Schema = mongoose.Schema;
-let Campaign = new Schema({
-    ownerId: { type: String, required: true },
-    name: { type: String, required: true, default: "" },
-    image: { type: String, required: true, default: "" },
-    players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],
-    readIds: [{ type: String, default: [] }],
-    writeIds: [{ type: String, default: [] }],
-    lastMap: { type: mongoose.Schema.Types.ObjectId, ref: 'Map' }
-});
+import User from './user';
 
 const updatePermissions = {
     save: async function (this: any) {
@@ -22,23 +13,24 @@ const updatePermissions = {
 
             await Map.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
         }
+        console.log(this);
     },
     remove: async function (this: any) {
         // remove all child tokens
         await Token.find({ campaignId: this._id })
-        .then((tokens) => {
-            tokens.forEach(async (token) => {token.remove()})
-        });
+            .then((tokens) => {
+                tokens.forEach(async (token) => { token.remove() })
+            });
 
         await Player.find({ campaignId: this._id })
-        .then((tokens) => {
-            tokens.forEach(async (token) => {token.remove()})
-        });
+            .then((tokens) => {
+                tokens.forEach(async (token) => { token.remove() })
+            });
 
         await Map.find({ campaignId: this._id })
-        .then((maps) => {
-            maps.forEach(async (map) => {map.remove()})
-        });
+            .then((maps) => {
+                maps.forEach(async (map) => { map.remove() })
+            });
     }
 }
 

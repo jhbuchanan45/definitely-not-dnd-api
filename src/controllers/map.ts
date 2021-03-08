@@ -34,9 +34,9 @@ export default {
         } else {
 
             // if map included in request, assign that to the variable
-            const fullMap:any = req.body.map
-            
-            const {readIds, writeIds,...cleanMap} = fullMap;
+            const fullMap: any = req.body.map
+
+            const { readIds, writeIds, ...cleanMap } = fullMap;
             rMap = cleanMap;
 
         }
@@ -51,7 +51,7 @@ export default {
         nMap.save()
             .then(mapDoc => {
 
-                const {__v, ...map} = mapDoc.toObject();
+                const { __v, ...map } = mapDoc.toObject();
                 // return newly created map to client
                 // useful since client needs some of the properties assigned when creating the model (eg _id)
                 res.json(map);
@@ -112,21 +112,21 @@ export default {
         } else {
 
             // if map included in request, assign that to the variable
-            const fullMap:any = req.body.map
-            
-            const {readIds, writeIds,...cleanMap} = fullMap;
+            const fullMap: any = req.body.map
+
+            const { readIds, writeIds, ...cleanMap } = fullMap;
             eMap = cleanMap;
         }
 
         // update map with given ID owned by the user
         // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-        await MapInfo.findOne({ _id: mapID, writeIds: req.user.sub })
+        await MapInfo.findOne({ _id: mapID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
             .then(async (map) => {
                 if (!map) {
                     throw new Error('No map exists with that ID')
                 }
-                
-                map.set({...eMap});
+
+                map.set({ ...eMap });
 
                 return await map.save();
             })
@@ -150,18 +150,18 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const mapID = req.params.mapID;
 
-        MapInfo.findOne({_id: mapID, writeIds: req.user.sub})
-        .then(async (map:any) => {
-            return await map.remove()
-        })
-        .then((map) => {
-            console.log("Deleted: ", map)
-            res.status(204).end("Deleted MapInfo")
-        })
-        .catch(err => {
-            console.log(err);
-            next(err);
-        })
+        MapInfo.findOne({ _id: mapID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
+            .then(async (map: any) => {
+                return await map.remove()
+            })
+            .then((map) => {
+                console.log("Deleted: ", map)
+                res.status(204).end("Deleted MapInfo")
+            })
+            .catch(err => {
+                console.log(err);
+                next(err);
+            })
     },
 
     deleteAll: async (req: any, res: any, next: any) => {

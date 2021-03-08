@@ -56,7 +56,7 @@ export default {
             });
     },
 
-    // unneeded?
+    // unneeded? - no, will be used for querying to check player ids
     getById: async (req: any, res: any, next: any) => {
         const userID = req.params.userID;
 

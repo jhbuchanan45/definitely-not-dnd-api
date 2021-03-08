@@ -6,3 +6,4 @@
 !package.json
 !.env-docker
 !haproxy.cfg
+!models/*
