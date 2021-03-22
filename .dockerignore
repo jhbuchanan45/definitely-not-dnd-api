@@ -1,9 +1,9 @@
 *
 
 !build/*
-!client/definitely-not-dnd/build/*
 !index.js
 !package.json
 !.env-docker
 !haproxy.cfg
 !models/*
+models/src/*

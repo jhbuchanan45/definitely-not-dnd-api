@@ -15,6 +15,7 @@ import tokenRoutes from './routes/token';
 import mapRoutes from './routes/map';
 import campaignRoutes from './routes/campaign';
 import playerRoutes from './routes/player';
+import classRoutes from './routes/pClass';
 
 const PORT = process.env.PORT || 3000;
 
@@ -41,6 +42,8 @@ app.use('/api/map', checkJwt, mapRoutes);
 app.use('/api/campaign', checkJwt, campaignRoutes);
 
 app.use('/api/player', checkJwt, playerRoutes);
+
+app.use('/api/class', checkJwt, classRoutes);
 
 app.listen(PORT, () => {
     console.log("Server is listening on port " + PORT);

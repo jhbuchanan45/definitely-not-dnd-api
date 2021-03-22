@@ -5,11 +5,16 @@ import { Model } from 'mongoose';
 
 export const generateTokenTypes = (Token: Model<any>) => {
 
+    const populateQuery = [
+        { path: 'classes._id', select: '-__v -readIds -writeIds -ownerId' }
+    ]
+
     return {
         get: async (req: any, res: any) => {
 
             // query to get tokens belonging to the user
-            Token.find({ campaignId: req.params.campaignId }, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }]).exec()
+            Token.find({ campaignId: req.params.campaignId }, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }])
+            .populate(populateQuery).exec()
                 .then(tokens => {
 
                     // log and send back tokens
@@ -75,7 +80,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
             const tokenID = req.params.tokenID;
 
             // attempt to find a token with the specified ID which belongs to the requesting user
-            Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v')
+            Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v').populate(populateQuery)
                 .then(token => {
 
                     // if no token was found throw an error

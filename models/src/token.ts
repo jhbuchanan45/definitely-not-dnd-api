@@ -2,15 +2,21 @@ import mongoose, { Schema } from 'mongoose';
 
 const coreStats = ["STR", "DEX", "CON", "INT", "WIS", "CHA", "XTR"];
 
-const keyStats = {
-    STR: { type: Number, default: 0 },
-    DEX: { type: Number, default: 0 },
-    CON: { type: Number, default: 0 },
-    INT: { type: Number, default: 0 },
-    WIS: { type: Number, default: 0 },
-    CHA: { type: Number, default: 0 },
-    XTR: { type: Number, default: 0 },
+const keyStatsGen = () => {
+    let keyStatsOutput = {};
+
+    for (let stat in coreStats) {
+        keyStatsOutput[coreStats[stat]] = {
+            raw: { type: Number, default: 10 },
+            base: { type: Number, default: 0 },
+            mod: { type: Number, default: 0 }
+        }
+    }
+
+    return keyStatsOutput;
 }
+
+const keyStats = keyStatsGen();
 
 const proficiencies = {
     armour: [{ type: String, default: [] }],
@@ -21,13 +27,13 @@ const proficiencies = {
 
 const HP = {
     current: { type: Number, default: 0 },
-    max: { type: Number, default: 0 },
-    tmp: { type: Number, default: 0 },
-    hit: { type: String, default: "" }
+    max: { base: { type: Number, default: 0 } },
+    tmp: { base: { type: Number, default: 0 } },
+    hit: { base: { type: String, default: "" } }
 }
 
 const savingThrow = {
-    prof: { type: Boolean, default: false },
+    prof: { flag: { type: Boolean, default: false } },
     mod: { type: Number, default: 0 },
     bns: { type: Number, default: 0 }
 }
@@ -47,20 +53,32 @@ const deathSaving = {
     failure: { type: Number, default: 0, min: 0, max: 3 }
 }
 
+const resist = {
+    vul: { base: [{ type: String, default: [] }] },
+    res: { base: [{ type: String, default: [] }] }
+}
+
 const speed = {
-    walking: { type: Number, default: 30 },
-    swimming: { type: Number, default: 15 },
-    climbing: { type: Number, default: 15 },
-    flying: { type: Number, default: 0 }
+    walking: { base: { type: Number, default: 30 } },
+    swimming: { base: { type: Number, default: 15 } },
+    climbing: { base: { type: Number, default: 15 } },
+    flying: { base: { type: Number, default: 0 } },
+    burrowing: { base: { type: Number, default: 0 } },
 }
 
 const skillCheck = (defaultStat: String = "STR") => {
     return {
-        prof: { type: Boolean, default: false },
+        prof: { flag: { type: Boolean, default: false } },
         mod: { type: Number, default: 0 },
         bns: { type: Number, default: 0 },
         check: { type: String, enum: coreStats, default: defaultStat }
     }
+}
+
+const classFormat = {
+    level: { type: Number, default: 0 },
+    label: { type: String, default: "New Class" },
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'pClass' } // eventually required
 }
 
 const skills = {
@@ -84,6 +102,13 @@ const skills = {
     extra: [skillCheck()]
 }
 
+const vision = {
+    darkvision: { base: { type: Number, default: 0 } },
+    blindsight: { base: { type: Number, default: 0 } },
+    tremorsense: { base: { type: Number, default: 0 } },
+    truesight: { base: { type: Number, default: 0 } }
+}
+
 const Token = new Schema({
     ownerId: { type: String, required: true },
     campaignId: { type: mongoose.Schema.Types.ObjectId, required: true },
@@ -94,23 +119,21 @@ const Token = new Schema({
     player: { type: String, default: "" },
     readIds: [{ type: String, default: [] }],
     writeIds: [{ type: String, default: [] }],
+    classes: [classFormat],
+    inspiration: { type: Boolean, default: false },
+    deathSaving,
     stats: {
-        level: { type: Number, default: 0 },
-        initative: { type: Number, default: 0 },
-        proficiency: { type: Number, default: 0 },
-        inspiration: { type: Boolean, default: false },
-        deathSaving,
-        resist: [{ type: String, default: [] }],
-        AC: { type: Number, default: 0 },
-        key: {
-            base: keyStats,
-            modifier: keyStats,
-        },
+        core: keyStats,
+        initiative: { base: { type: Number, default: 0 } },
+        proficiency: { base: { type: Number, default: 0 } },
+        resist,
+        AC: { base: { type: Number, default: 0 } },
         skills,
         savingThrows,
         proficiencies,
         HP,
-        speed
+        speed,
+        vision
     },
     pos: { x: { type: Number, default: 0 }, y: { type: Number, default: 0 } },
     size: { type: Number, default: 0 },
