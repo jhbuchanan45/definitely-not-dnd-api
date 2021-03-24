@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
-    "start": "set NODE_ENV=production&&cd ./models&& npm run dist&& cd ..&& node index.js",
+    "start": "set NODE_ENV=production&&cd ./models&& npm install&& npm run dist&& cd ..&& node index.js",
     "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
     "types": "tsc",
     "update-client": "cd client/definitely-not-dnd&&git fetch --all&& git reset @{u}",
