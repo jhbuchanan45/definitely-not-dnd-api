@@ -7,14 +7,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
-    "start": "set NODE_ENV=production&& cd ./models&& npm install&& npm run dist&& cd ..&& node index.js",
+    "start": "set NODE_ENV=production&& node index.js",
     "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
     "types": "tsc",
-    "update-client": "cd client/definitely-not-dnd&&git fetch --all&& git reset @{u}",
-    "build-client": "cd client/definitely-not-dnd&& npm run build",
-    "deploy-client": "cd client/definitely-not-dnd&& npm run build&&cd ../..&&npm run dockerise",
     "dockerise": "npm run build&& cd dockerise&& docker-compose up --build -d",
-    "undockerise": "cd dockerise&& docker-compose stop"
+    "undockerise": "cd dockerise&& docker-compose stop",
+    "preinstall": "cd ./models&& npm install --also=dev&& npm run dist",
+    "postinstall": "npm install --also=dev&& npm run build"
   },
   "engines": {
     "node": ">=14"
@@ -25,7 +24,7 @@
   "dependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/runtime": "^7.12.5",
-    "@jhbuchanan45/dnd-models": "file:models",
+    "@jhbuchanan45/dnd-models": "^1.2.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
