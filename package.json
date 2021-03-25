@@ -12,8 +12,7 @@
     "types": "tsc",
     "dockerise": "npm run build&& cd dockerise&& docker-compose up --build -d",
     "undockerise": "cd dockerise&& docker-compose stop",
-    "preinstall": "cd ./models&& npm install --also=dev&& npm run dist",
-    "postinstall": "npm install --also=dev&& npm run build"
+    "postinstall": "npm run build"
   },
   "engines": {
     "node": ">=14"
