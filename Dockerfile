@@ -6,9 +6,13 @@ WORKDIR /usr/src/api
 
 COPY package.json /usr/src/api
 
-COPY models/ /usr/src/api/models
+COPY .npmrc /usr/src/api
 
-RUN npm install --production --silent
+ARG DND_NPM_TOKEN
+
+ENV DND_NPM_TOKEN=$DND_NPM_TOKEN
+
+RUN npm install --production
 
 COPY . /usr/src/api
 

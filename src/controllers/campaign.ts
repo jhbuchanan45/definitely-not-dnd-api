@@ -3,7 +3,7 @@ import User from '../models/user';
 
 // populate query
 const populateQuery = [
-    { path: 'players', select: 'name image classes.level race' },
+    { path: 'players', select: 'name image classes.level race campaignId' },
     { path: 'lastMap', select: 'name image' }
 ]
 

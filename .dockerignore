@@ -3,7 +3,7 @@
 !build/*
 !index.js
 !package.json
+!package-lock.json
 !.env-docker
 !haproxy.cfg
-!models/*
-models/src/*
+!.npmrc

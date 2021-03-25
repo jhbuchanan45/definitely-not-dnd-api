@@ -2,7 +2,10 @@ version: "2"
 services:
   api:
     container_name: api
-    build: ../
+    build:
+      context: ../
+      args: 
+        - DND_NPM_TOKEN
     links:
       - mongo
     env_file:
@@ -13,7 +16,10 @@ services:
       - "80"
   api2:
     container_name: api2
-    build: ../
+    build:
+      context: ../
+      args: 
+        - DND_NPM_TOKEN
     links:
       - mongo
     env_file:
