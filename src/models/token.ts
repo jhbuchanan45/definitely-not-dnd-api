@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import { Token } from '@jhbuchanan45/dnd-models';
 import Campaign from './campaign';
 

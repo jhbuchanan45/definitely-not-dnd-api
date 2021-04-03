@@ -6,6 +6,8 @@ WORKDIR /usr/src/api
 
 COPY package.json /usr/src/api
 
+COPY package-lock.json /usr/src/api
+
 COPY .npmrc /usr/src/api
 
 ARG DND_NPM_TOKEN

@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const coreStats = ["STR", "DEX", "CON", "INT", "WIS", "CHA", "XTR"];
+export const coreStats = ["STR", "DEX", "CON", "INT", "WIS", "CHA", "XTR"];
 
 const keyStatsGen = () => {
     let keyStatsOutput = {};
@@ -14,6 +14,10 @@ const keyStatsGen = () => {
     }
 
     return keyStatsOutput;
+}
+
+const prof = {
+    level: { type: Number, default: 0, min: -10, max: 10 }
 }
 
 const keyStats = keyStatsGen();
@@ -33,7 +37,7 @@ const HP = {
 }
 
 const savingThrow = {
-    prof: { flag: { type: Boolean, default: false } },
+    prof: prof,
     mod: { type: Number, default: 0 },
     bns: { type: Number, default: 0 }
 }
@@ -66,39 +70,43 @@ const speed = {
     burrowing: { base: { type: Number, default: 0 } },
 }
 
-const skillCheck = (defaultStat: String = "STR") => {
+const skillCheck = (defaultStat: String = "STR", label: String = "Skill") => {
     return {
-        prof: { flag: { type: Boolean, default: false } },
+        prof: prof,
         mod: { type: Number, default: 0 },
         bns: { type: Number, default: 0 },
+        label: { type: String, default: label },
         check: { type: String, enum: coreStats, default: defaultStat }
     }
 }
 
 const classFormat = {
-    level: { type: Number, default: 0 },
+    level: { type: Number, default: 0, required: true },
     label: { type: String, default: "New Class" },
-    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'pClass' } // eventually required
+    data: {
+        choices: { type: Map, of: String },
+    },
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: 'pClass', required: true }
 }
 
 const skills = {
-    acrobatics: skillCheck("DEX"),
-    animalHandling: skillCheck("WIS"),
-    arcana: skillCheck("INT"),
-    athletics: skillCheck("STR"),
-    deception: skillCheck("CHA"),
-    history: skillCheck("INT"),
-    insight: skillCheck("WIS"),
-    intimidation: skillCheck("CHA"),
-    investigation: skillCheck("INT"),
-    medicine: skillCheck("WIS"),
-    nature: skillCheck("INT"),
-    perception: skillCheck("WIS"),
-    performance: skillCheck("CHA"),
-    persuasion: skillCheck("CHA"),
-    religion: skillCheck("INT"),
-    sleightOfHand: skillCheck("DEX"),
-    survival: skillCheck("WIS"),
+    acrobatics: skillCheck("DEX", "Acrobatics"),
+    animalHandling: skillCheck("WIS", "Animal Handling"),
+    arcana: skillCheck("INT", "Arcana"),
+    athletics: skillCheck("STR", "Athletics"),
+    deception: skillCheck("CHA", "Deception"),
+    history: skillCheck("INT", "History"),
+    insight: skillCheck("WIS", "Insight"),
+    intimidation: skillCheck("CHA", "Intimidation"),
+    investigation: skillCheck("INT", "Investigation"),
+    medicine: skillCheck("WIS", "Medicine"),
+    nature: skillCheck("INT", "Nature"),
+    perception: skillCheck("WIS", "Perception"),
+    performance: skillCheck("CHA", "Performance"),
+    persuasion: skillCheck("CHA", "Persuasion"),
+    religion: skillCheck("INT", "Religion"),
+    sleightOfHand: skillCheck("DEX", "Sleight of Hand"),
+    survival: skillCheck("WIS", "Survival"),
     extra: [skillCheck()]
 }
 
@@ -109,9 +117,16 @@ const vision = {
     truesight: { base: { type: Number, default: 0 } }
 }
 
+const inventoryItem = {
+    quantity: { type: Number, required: true, default: 1 },
+    details: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
+    equipped: { type: Boolean, default: false },
+    _id: false
+}
+
 const Token = new Schema({
     ownerId: { type: String, required: true },
-    campaignId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    campaignId: { type: mongoose.Schema.Types.ObjectId, required: true, index: true },
     image: { type: String, required: true, default: "" },
     name: { type: String, required: true, default: "New Character" },
     race: { type: String, default: "None" },
@@ -120,6 +135,7 @@ const Token = new Schema({
     readIds: [{ type: String, default: [] }],
     writeIds: [{ type: String, default: [] }],
     classes: [classFormat],
+    inventory: [inventoryItem],
     inspiration: { type: Boolean, default: false },
     deathSaving,
     stats: {

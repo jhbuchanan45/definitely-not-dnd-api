@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 const Campaign = new Schema({
-    ownerId: { type: String, required: true },
+    ownerId: { type: String, required: true, index: true },
     name: { type: String, required: true, default: "" },
     image: { type: String, required: true, default: "" },
     players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],

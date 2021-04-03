@@ -1,20 +1,25 @@
 import { Model } from 'mongoose';
+import { classReadQuery } from './pClass';
+import { itemReadQuery } from './item';
 
 // to avoid boilerplate for very similar token controllers, each route will 
 // 'generate' the functions by passing the required model
 
 export const generateTokenTypes = (Token: Model<any>) => {
 
-    const populateQuery = [
-        { path: 'classes._id', select: '-__v -readIds -writeIds -ownerId' }
-    ]
+    const populateQuery = (req) => {
+        return [
+            { path: 'classes._id', select: '-__v -readIds -writeIds -ownerId', match: classReadQuery(req) },
+            { path: 'inventory.details', select: '-__v -readIds -writeIds -ownerId', match: itemReadQuery(req) }
+        ]
+    }
 
     return {
         get: async (req: any, res: any) => {
 
             // query to get tokens belonging to the user
             Token.find({ campaignId: req.params.campaignId }, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }])
-            .populate(populateQuery).exec()
+                .populate(populateQuery(req)).exec()
                 .then(tokens => {
 
                     // log and send back tokens
@@ -80,7 +85,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
             const tokenID = req.params.tokenID;
 
             // attempt to find a token with the specified ID which belongs to the requesting user
-            Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v').populate(populateQuery)
+            Token.findOne({ _id: tokenID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v').populate(populateQuery(req))
                 .then(token => {
 
                     // if no token was found throw an error

@@ -1,10 +1,26 @@
 import pClass from '../models/pClass';
 
+export const classReadQuery = (req, classID = null) => {
+    if (classID) {
+        return { _id: classID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }, { public: true }] }
+    } else {
+        return { $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }, { public: true }] }
+    }
+};
+
+export const classWriteQuery = (req, classID = null) => {
+    if (classID) {
+        return { _id: classID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] }
+    } else {
+        return { $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] }
+    }
+};
+
 export default {
     get: async (req: any, res: any) => {
 
         // query to get classes belonging to the user
-        pClass.find({}, '-__v').or([{ ownerId: req.user.sub }, { readIds: req.user.sub }, { public: true }]).exec()
+        pClass.find(classReadQuery(req), '-__v')
             .then(classes => {
 
                 // log and send back classes
@@ -70,7 +86,7 @@ export default {
         const pClassID = req.params.pClassID;
 
         // attempt to find a pClass with the specified ID which belongs to the requesting user
-        pClass.findOne({ _id: pClassID, $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }] }, '-__v')
+        pClass.findOne(classReadQuery(req), '-__v')
             .then(pClass => {
 
                 // if no pClass was found throw an error
@@ -98,7 +114,7 @@ export default {
             })
     },
 
-    update: async (req: any, res: any, next: any) => {
+    update: async (req: any, res: any) => {
         const pClassID = req.params.pClassID;
         let eClass;
 
@@ -120,7 +136,7 @@ export default {
 
         // update pClass with given ID owned by the user
         // TODO - store ownerID as array of owners (maybe array of objs for permissions)
-        await pClass.findOne({ _id: pClassID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }, { public: true }] })
+        await pClass.findOne(classWriteQuery(req, pClassID))
             .then(async (pClass) => {
                 if (!pClass) {
                     throw new Error('No class exists with that ID')
@@ -150,7 +166,7 @@ export default {
     delete: async (req: any, res: any, next: any) => {
         const pClassID = req.params.pClassID;
 
-        pClass.findOne({ _id: pClassID, $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] })
+        pClass.findOne(classWriteQuery(req, pClassID))
             .then(async (pClass: any) => {
                 return await pClass.remove()
             })
