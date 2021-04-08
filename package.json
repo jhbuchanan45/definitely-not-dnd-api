@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
-    "start": "set NODE_ENV=production&& yarn run build&& node index.js",
+    "start": "set NODE_ENV=production&& node index.js",
     "docker-start": "set NODE_ENV=production&& node index.js",
     "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
     "types": "tsc",
