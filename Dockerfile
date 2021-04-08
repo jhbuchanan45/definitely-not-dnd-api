@@ -20,4 +20,4 @@ ENV NODE_ENV=[production]
 
 COPY . /usr/src/api
 
-CMD ["yarn", "run", "docker-start"]
+CMD ["yarn", "start"]

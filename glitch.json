@@ -1,7 +1,0 @@
-{
-    "install": "bash glitch/install.sh",
-    "start": "bash glitch/start.sh",
-    "watch": {
-      "throttle": 1000
-    }
-  }
