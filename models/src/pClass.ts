@@ -49,7 +49,7 @@ const choicesSchema = new Schema({
 
 const targets = {
     'core': { schema: new Schema(intT2) },
-    "initiative": { schema: new Schema(intT1) },
+    "initiative": { schema: new Schema({ ...intT2, mode: { type: String, required: true, enum: ["set", "add", "advantage"] } }) },
     "proficiency": { schema: new Schema(intT1) },
     "resist": { schema: new Schema(strT2) },
 
@@ -61,14 +61,14 @@ const targets = {
             coreMod: { type: String, enum: coreStats }
         })
     },
-    "skills": { schema: new Schema({ ...intT2, mode: { type: String, required: true, enum: ["set", "add", "prof"] } }) },
-    "savingThrows": { schema: new Schema({ ...intT2, mode: { type: String, required: true, enum: ["set", "add", "prof"] } }) },
+    "skills": { schema: new Schema({ ...intT2, mode: { type: String, required: true, enum: ["set", "add", "prof", "advantage"] } }) },
+    "savingThrows": { schema: new Schema({ ...intT2, mode: { type: String, required: true, enum: ["set", "add", "prof", "advantage"] } }) },
     "proficiencies": { schema: new Schema(strT2) },
     "HP": {
         schema: new Schema({
             ...intT2,
             value: { type: Schema.Types.Mixed, required: true },
-            mode: { type: String, required: true, enum: ["set", "add", "hit"] }
+            // mode: { type: String, required: true, enum: ["set", "add", "hit"] }
         })
     },
     "speed": { schema: new Schema(intT2) },

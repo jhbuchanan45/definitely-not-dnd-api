@@ -29,11 +29,17 @@ const proficiencies = {
     languages: [{ type: String, default: [] }]
 }
 
+const deathSaving = {
+    success: { type: Number, default: 0, min: 0, max: 3 },
+    failure: { type: Number, default: 0, min: 0, max: 3 }
+}
+
 const HP = {
     current: { type: Number, default: 0 },
     max: { base: { type: Number, default: 0 } },
     tmp: { base: { type: Number, default: 0 } },
-    hit: { base: { type: String, default: "" } }
+    hit: { base: { type: String, default: "" } },
+    deathSaving
 }
 
 const savingThrow = {
@@ -52,10 +58,6 @@ const savingThrows = {
     XTR: savingThrow,
 }
 
-const deathSaving = {
-    success: { type: Number, default: 0, min: 0, max: 3 },
-    failure: { type: Number, default: 0, min: 0, max: 3 }
-}
 
 const resist = {
     vul: { base: [{ type: String, default: [] }] },
@@ -137,7 +139,6 @@ const Token = new Schema({
     classes: [classFormat],
     inventory: [inventoryItem],
     inspiration: { type: Boolean, default: false },
-    deathSaving,
     stats: {
         core: keyStats,
         initiative: { base: { type: Number, default: 0 } },

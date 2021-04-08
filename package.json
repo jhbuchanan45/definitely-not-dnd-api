@@ -7,12 +7,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
-    "start": "set NODE_ENV=production&& node index.js",
+    "start": "set NODE_ENV=production&& yarn run build&& node index.js",
+    "docker-start": "set NODE_ENV=production&& node index.js",
     "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
     "types": "tsc",
-    "dockerise": "npm run build&& cd dockerise&& docker-compose up --build -d",
-    "undockerise": "cd dockerise&& docker-compose stop",
-    "postinstall": "npm run build"
+    "dockerise": "yarn run build&& cd dockerise&& docker-compose up --build -d",
+    "undockerise": "cd dockerise&& docker-compose stop"
   },
   "engines": {
     "node": ">=14"
@@ -23,7 +23,7 @@
   "dependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/runtime": "^7.13.10",
-    "@jhbuchanan45/dnd-models": "^0.1.12",
+    "@jhbuchanan45/dnd-models": "^0.1.13",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
