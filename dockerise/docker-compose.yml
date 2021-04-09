@@ -4,12 +4,13 @@ services:
     container_name: api
     build:
       context: ../
+      dockerfile: ./server/Dockerfile
       args: 
         - DND_NPM_TOKEN
     links:
       - mongo
     env_file:
-      - ../.env-docker
+      - ../server/.env-docker
     depends_on:
       - mongo
     expose: 
@@ -18,12 +19,13 @@ services:
     container_name: api2
     build:
       context: ../
+      dockerfile: ./server/Dockerfile
       args: 
         - DND_NPM_TOKEN
     links:
       - mongo
     env_file:
-      - ../.env-docker
+      - ../server/.env-docker
     depends_on:
       - mongo
     expose: 

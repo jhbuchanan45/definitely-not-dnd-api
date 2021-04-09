@@ -1,9 +1,16 @@
 *
 
-!build/*
-!index.js
+!server/src/*
+!server/index.js
+!server/package.json
+!server/.env-docker
+!server/.babelrc
 !package.json
 !yarn.lock
-!.env-docker
-!haproxy.cfg
-!.npmrc
+
+!.yarnrc.yml
+!.yarn/cache/*
+!.yarn/releases/*
+!.yarn/plugins/*
+!.yarn/sdks/*
+!.yarn/versions/*

@@ -1,0 +1,9 @@
+{
+  "name": "dockerise",
+  "scripts": {
+    "start": "docker-compose up",
+    "build": "docker-compose build",
+    "deploy": "docker-compose up --build -d",
+    "stop": "docker-compose stop"
+  }
+}
