@@ -1,14 +1,24 @@
 {
     "compilerOptions": {
-        "esModuleInterop": true,
-        // Ensure that .d.ts files are created by tsc, but not .js files
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        // Ensure that Babel can safely transpile files in the TypeScript project
-        "isolatedModules": true,
-        "moduleResolution": "node",
+      "target": "es5",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "resolveJsonModule": true,
+      "noImplicitAny": false,
+      "lib": ["es6", "es2015"],
+      "types": ["node"],
+      "declaration": true,
+      "outDir": "lib",
+      "rootDir": "src",
+      "strict": true,
     },
+    "exclude": [
+      "lib",
+      "node_modules",
+      "src/**/*.spec.ts"
+    ],
     "include": [
-        "./src/**/*"
-      ]
-}
+      "src"
+    ]
+  }

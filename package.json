@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn workspace server run build",
     "start": "yarn workspace server start",
+    "patchModels": "yarn workspace @jhbuchanan45/dnd-models run patch",
     "dockerise": "yarn workspace dockerise run deploy",
     "undockerise": "yarn workspace dockerise stop"
   },
@@ -18,7 +19,8 @@
   "workspaces": {
     "packages": [
       "server",
-      "dockerise"
+      "dockerise",
+      "models"
     ]
   },
   "keywords": [],

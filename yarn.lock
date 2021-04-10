@@ -5,7 +5,7 @@ __metadata:
   version: 4
   cacheKey: 7
 
-"@babel/cli@npm:^7.13.14":
+"@babel/cli@npm:^7.12.10, @babel/cli@npm:^7.13.14":
   version: 7.13.14
   resolution: "@babel/cli@npm:7.13.14"
   dependencies:
@@ -58,7 +58,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.13.15, @babel/core@npm:^7.13.14":
+"@babel/core@npm:7.13.15, @babel/core@npm:^7.12.10, @babel/core@npm:^7.13.14":
   version: 7.13.15
   resolution: "@babel/core@npm:7.13.15"
   dependencies:
@@ -357,7 +357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/node@npm:^7.13.13":
+"@babel/node@npm:^7.12.10, @babel/node@npm:^7.13.13":
   version: 7.13.13
   resolution: "@babel/node@npm:7.13.13"
   dependencies:
@@ -1106,7 +1106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.13.12":
+"@babel/preset-env@npm:^7.12.11, @babel/preset-env@npm:^7.13.12":
   version: 7.13.15
   resolution: "@babel/preset-env@npm:7.13.15"
   dependencies:
@@ -1200,7 +1200,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.13.0":
+"@babel/preset-typescript@npm:^7.12.7, @babel/preset-typescript@npm:^7.13.0":
   version: 7.13.0
   resolution: "@babel/preset-typescript@npm:7.13.0"
   dependencies:
@@ -1213,7 +1213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:^7.13.14, @babel/register@npm:^7.13.8":
+"@babel/register@npm:^7.12.10, @babel/register@npm:^7.13.14, @babel/register@npm:^7.13.8":
   version: 7.13.14
   resolution: "@babel/register@npm:7.13.14"
   dependencies:
@@ -1292,16 +1292,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jhbuchanan45/dnd-models@npm:^0.1.0":
-  version: 0.1.14
-  resolution: "@jhbuchanan45/dnd-models@npm:0.1.14::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40jhbuchanan45%2Fdnd-models%2F0.1.14%2Fbc58475c8b96307ed23a827b76fc9389b65150e947465bc667f1dff5032be44b"
+"@jhbuchanan45/dnd-models@^0.1.16, @jhbuchanan45/dnd-models@workspace:models":
+  version: 0.0.0-use.local
+  resolution: "@jhbuchanan45/dnd-models@workspace:models"
   dependencies:
+    "@babel/cli": ^7.12.10
+    "@babel/core": ^7.12.10
+    "@babel/node": ^7.12.10
+    "@babel/preset-env": ^7.12.11
+    "@babel/preset-typescript": ^7.12.7
+    "@babel/register": ^7.12.10
+    "@types/node": ^14.14.37
     mongoose: ^5.12.3
     mongoose-schema-jsonschema: ^1.4.4
+    ts-node: ^9.1.1
     typescript: ^4.2.3
-  checksum: deee140eded35297f8af39c39757f85bff2897377e99cf4a5ccdb9a337dfd70c591abc815ab174d75d3b44813e9fab47a060c97ef23a4ff55c3e7912ed237c67
-  languageName: node
-  linkType: hard
+  languageName: unknown
+  linkType: soft
 
 "@nicolo-ribaudo/chokidar-2@npm:2.1.8-no-fsevents":
   version: 2.1.8-no-fsevents
@@ -1474,7 +1481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^14.14.37":
   version: 14.14.37
   resolution: "@types/node@npm:14.14.37"
   checksum: 5e2d9baf7594ebacaf016716515f30de0765169412787f981481c2fb8b468923149bb9e2e3219ee672399811672ceddc339a7372a61cf15bc656836a5494d991
@@ -5698,7 +5705,7 @@ fsevents@~2.3.1:
     "@babel/preset-typescript": ^7.13.0
     "@babel/register": ^7.13.14
     "@babel/runtime": ^7.13.10
-    "@jhbuchanan45/dnd-models": ^0.1.0
+    "@jhbuchanan45/dnd-models": ^0.1.16
     "@tsconfig/node14": ^1.0.0
     "@types/cors": ^2.8.10
     "@types/express": ^4.17.11

@@ -20,7 +20,7 @@
   "dependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/runtime": "^7.13.10",
-    "@jhbuchanan45/dnd-models": "^0.1.0",
+    "@jhbuchanan45/dnd-models": "^0.1.16",
     "@tsconfig/node14": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

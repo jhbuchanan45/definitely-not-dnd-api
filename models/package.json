@@ -1,30 +1,32 @@
 {
   "name": "@jhbuchanan45/dnd-models",
-  "version": "0.1.14",
+  "version": "0.1.16",
   "description": "",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "files": [
-    "/dist/*"
+    "lib"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/jhbuchanan45"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:jhbuchanan45/definitely-not-dnd-api.git",
+    "url": "ssh://git@github.com/jhbuchanan45/definitely-not-dnd-api.git",
     "directory": "@jhbuchanan45/definitely-not-dnd-api"
   },
   "scripts": {
     "dist": "babel ./src --out-dir ./dist --copy-files --extensions \".ts\"",
-    "types": "tsc"
+    "patch": "yarn build&& yarn version patch&& yarn npm publish",
+    "minor": "yarn build&& yarn version minor&& yarn npm publish",
+    "major": "yarn build&& yarn version major&& yarn npm publish",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "mongoose": "^5.12.3",
-    "mongoose-schema-jsonschema": "^1.4.4",
-    "typescript": "^4.2.3"
+    "mongoose-schema-jsonschema": "^1.4.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -33,6 +35,8 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
     "@babel/register": "^7.12.10",
-    "ts-node": "^9.1.1"
+    "@types/node": "^14.14.37",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
   }
 }
