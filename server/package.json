@@ -5,10 +5,10 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
+    "babel": "babel ./src --out-dir ./build --copy-files --extensions \".ts,.js\"",
     "start": "node index.js",
     "dev": "set NODE_ENV=dev&& ts-node-dev index.js",
-    "types": "tsc"
+    "build": "tsc"
   },
   "engines": {
     "node": "14.x",
@@ -21,6 +21,7 @@
     "@babel/cli": "^7.13.14",
     "@babel/runtime": "^7.13.10",
     "@jhbuchanan45/dnd-models": "^0.1.0",
+    "@tsconfig/node14": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

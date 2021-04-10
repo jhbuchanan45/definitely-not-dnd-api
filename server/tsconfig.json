@@ -1,13 +1,14 @@
 {
+  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
     "esModuleInterop": true,
     "allowJs": true,
-    "noEmit": true,
-    "moduleResolution": "node",
+    "noEmit": false,
     "strict": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "outDir": "build"
   },
   "include": [
     "./src/**/*"
-  ]
+  ],
 }

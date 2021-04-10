@@ -12,7 +12,7 @@
 /data
 
 # production
-/build
+/server/build
 /client
 
 # misc
