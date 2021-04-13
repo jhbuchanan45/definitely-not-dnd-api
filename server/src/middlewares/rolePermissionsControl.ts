@@ -7,7 +7,11 @@ export const defaultSafeReadQuery = (req, objID = null, adminOverride = true) =>
     ? { _id: objID }
     : {
         _id: objID,
-        $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }, { src: { $in: userContentPerms } }],
+        $or: [
+          { ownerId: req.user.sub },
+          { readIds: req.user.sub },
+          { src: { $in: userContentPerms } },
+        ],
       };
 };
 
@@ -18,6 +22,10 @@ export const defaultSafeWriteQuery = (req, objID = null, adminOverride = true) =
     ? { _id: objID }
     : {
         _id: objID,
-        $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }, { src: { $in: userContentPerms } }],
+        $or: [
+          { ownerId: req.user.sub },
+          { writeIds: req.user.sub },
+          { src: { $in: userContentPerms } },
+        ],
       };
 };

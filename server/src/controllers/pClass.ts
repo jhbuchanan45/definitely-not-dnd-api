@@ -76,7 +76,8 @@ export default {
       .catch((err) => {
         // on error, return error message or generic error message
         res.status(500).send({
-          message: err.message || 'Some error occurred when creating the class, plase try again later.',
+          message:
+            err.message || 'Some error occurred when creating the class, plase try again later.',
         });
       });
   },
