@@ -13,8 +13,8 @@ campaignRoutes.delete('/:campaignID', campaignController.delete);
 
 campaignRoutes.get('/:campaignID', campaignController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    campaignRoutes.delete('/', campaignController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  campaignRoutes.delete('/', campaignController.deleteAll);
 }
 
 export default campaignRoutes;

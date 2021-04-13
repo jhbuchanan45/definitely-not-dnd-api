@@ -16,8 +16,8 @@ playerRoutes.delete('/:tokenID', tokenController.delete);
 
 playerRoutes.get('/:tokenID', tokenController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    playerRoutes.delete('/', tokenController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  playerRoutes.delete('/', tokenController.deleteAll);
 }
 
 export default playerRoutes;

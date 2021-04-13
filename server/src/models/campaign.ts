@@ -5,34 +5,46 @@ import Map from './map';
 import User from './user';
 
 const updatePermissions = {
-    save: async function (this: any) {
-        if (this.isModified('writeIds readIds')) {
-            await Token.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
+  save: async function (this: any) {
+    if (this.isModified('writeIds readIds')) {
+      await Token.updateMany(
+        { campaignId: this._id },
+        { readIds: this.readIds, writeIds: this.writeIds }
+      );
 
-            await Player.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
+      await Player.updateMany(
+        { campaignId: this._id },
+        { readIds: this.readIds, writeIds: this.writeIds }
+      );
 
-            await Map.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
-        }
-        console.log(this);
-    },
-    remove: async function (this: any) {
-        // remove all child tokens
-        await Token.find({ campaignId: this._id })
-            .then((tokens) => {
-                tokens.forEach(async (token) => { token.remove() })
-            });
-
-        await Player.find({ campaignId: this._id })
-            .then((tokens) => {
-                tokens.forEach(async (token) => { token.remove() })
-            });
-
-        await Map.find({ campaignId: this._id })
-            .then((maps) => {
-                maps.forEach(async (map) => { map.remove() })
-            });
+      await Map.updateMany(
+        { campaignId: this._id },
+        { readIds: this.readIds, writeIds: this.writeIds }
+      );
     }
-}
+    console.log(this);
+  },
+  remove: async function (this: any) {
+    // remove all child tokens
+    await Token.find({ campaignId: this._id }).then((tokens) => {
+      tokens.forEach(async (token) => {
+        token.remove();
+      });
+    });
+
+    await Player.find({ campaignId: this._id }).then((tokens) => {
+      tokens.forEach(async (token) => {
+        token.remove();
+      });
+    });
+
+    await Map.find({ campaignId: this._id }).then((maps) => {
+      maps.forEach(async (map) => {
+        map.remove();
+      });
+    });
+  }
+};
 
 Campaign.pre('save', updatePermissions.save);
 

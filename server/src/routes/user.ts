@@ -13,8 +13,8 @@ userRoutes.delete('/', userController.delete);
 
 userRoutes.get('/:userID', userController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    userRoutes.delete('/', userController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  userRoutes.delete('/', userController.deleteAll);
 }
 
 export default userRoutes;

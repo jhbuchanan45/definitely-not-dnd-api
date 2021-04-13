@@ -16,8 +16,8 @@ tokenRoutes.delete('/:tokenID', tokenController.delete);
 
 tokenRoutes.get('/:tokenID', tokenController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    tokenRoutes.delete('/', tokenController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  tokenRoutes.delete('/', tokenController.deleteAll);
 }
 
 export default tokenRoutes;

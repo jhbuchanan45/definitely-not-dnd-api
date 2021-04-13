@@ -13,8 +13,8 @@ classRoutes.delete('/:pClassID', classController.delete);
 
 classRoutes.get('/:pClassID', classController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    classRoutes.delete('/', classController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  classRoutes.delete('/', classController.deleteAll);
 }
 
 export default classRoutes;

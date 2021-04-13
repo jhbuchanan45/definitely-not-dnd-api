@@ -13,8 +13,8 @@ itemRoutes.delete('/:itemID', itemController.delete);
 
 itemRoutes.get('/:itemID', itemController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    itemRoutes.delete('/', itemController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  itemRoutes.delete('/', itemController.deleteAll);
 }
 
 export default itemRoutes;

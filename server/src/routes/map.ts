@@ -13,8 +13,8 @@ mapRoutes.delete('/:mapID', mapController.delete);
 
 mapRoutes.get('/:mapID', mapController.getById);
 
-if (process.env.NODE_ENV === "development") {
-    mapRoutes.delete('/', mapController.deleteAll);
+if (process.env.NODE_ENV === 'development') {
+  mapRoutes.delete('/', mapController.deleteAll);
 }
 
 export default mapRoutes;

@@ -3,7 +3,7 @@ const app = express();
 
 import cors from 'cors';
 import mongoose from 'mongoose';
-import jwtAuthz from 'express-jwt-authz';
+// import jwtAuthz from 'express-jwt-authz';
 // import path from 'path';
 
 // import middlewares
@@ -20,16 +20,19 @@ import itemRoutes from './routes/item';
 
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect(`${process.env.DB_HOST}`, {
+mongoose
+  .connect(`${process.env.DB_HOST}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(() => {
-    console.log("Successfully connected to database!");
-}).catch(err => {
-    console.log("Failed to connect to database.")
+  })
+  .then(() => {
+    console.log('Successfully connected to database!');
+  })
+  .catch((err) => {
+    console.log('Failed to connect to database.');
     console.log(err);
     process.exit();
-})
+  });
 
 app.use(cors());
 app.use(express.json({ limit: '5mb' }));
@@ -49,5 +52,5 @@ app.use('/api/class', checkJwt, classRoutes);
 app.use('/api/item', checkJwt, itemRoutes);
 
 app.listen(PORT, () => {
-    console.log("Server is listening on port " + PORT);
-})
+  console.log('Server is listening on port ' + PORT);
+});
