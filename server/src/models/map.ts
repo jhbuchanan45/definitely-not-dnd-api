@@ -10,9 +10,7 @@ const filePermissionsMiddleware = {
     );
 
     if (!campaign) {
-      throw new Error(
-        'Insufficient permissions to add to campaign or campaign does not exist'
-      );
+      throw new Error('Insufficient permissions to add to campaign or campaign does not exist');
     }
 
     // if new copy read/write permissions from campaign
@@ -26,7 +24,7 @@ const filePermissionsMiddleware = {
     }
 
     await campaign.save();
-  }
+  },
 };
 
 Map.pre('save', filePermissionsMiddleware.save);

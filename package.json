@@ -10,7 +10,8 @@
     "start": "yarn workspace server start",
     "patchModels": "yarn workspace @jhbuchanan45/dnd-models run patch",
     "dockerise": "yarn workspace dockerise run deploy",
-    "undockerise": "yarn workspace dockerise stop"
+    "undockerise": "yarn workspace dockerise stop",
+    "prettier": "npx prettier --config .prettierrc './**/*.ts' --write"
   },
   "engines": {
     "node": "14.x",

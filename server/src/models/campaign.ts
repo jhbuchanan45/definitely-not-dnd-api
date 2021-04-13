@@ -7,20 +7,11 @@ import User from './user';
 const updatePermissions = {
   save: async function (this: any) {
     if (this.isModified('writeIds readIds')) {
-      await Token.updateMany(
-        { campaignId: this._id },
-        { readIds: this.readIds, writeIds: this.writeIds }
-      );
+      await Token.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
 
-      await Player.updateMany(
-        { campaignId: this._id },
-        { readIds: this.readIds, writeIds: this.writeIds }
-      );
+      await Player.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
 
-      await Map.updateMany(
-        { campaignId: this._id },
-        { readIds: this.readIds, writeIds: this.writeIds }
-      );
+      await Map.updateMany({ campaignId: this._id }, { readIds: this.readIds, writeIds: this.writeIds });
     }
     console.log(this);
   },
@@ -43,7 +34,7 @@ const updatePermissions = {
         map.remove();
       });
     });
-  }
+  },
 };
 
 Campaign.pre('save', updatePermissions.save);

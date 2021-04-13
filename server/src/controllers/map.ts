@@ -14,7 +14,7 @@ export default {
       .catch((err) => {
         // on error send back error message or generic error message
         res.status(500).send({
-          message: err.message || 'Some error occurred while getting maps.'
+          message: err.message || 'Some error occurred while getting maps.',
         });
       });
   },
@@ -25,7 +25,7 @@ export default {
     if (!req.body.map) {
       // if no map was actually sent, respond with error
       return res.status(400).send({
-        message: 'MapInfo cannot be blank.'
+        message: 'MapInfo cannot be blank.',
       });
     } else {
       // if map included in request, assign that to the variable
@@ -53,9 +53,7 @@ export default {
       .catch((err) => {
         // on error, return error message or generic error message
         res.status(500).send({
-          message:
-            err.message ||
-            'Some error occurred when creating the map, plase try again later.'
+          message: err.message || 'Some error occurred when creating the map, plase try again later.',
         });
       });
   },
@@ -67,7 +65,7 @@ export default {
     MapInfo.findOne(
       {
         _id: mapID,
-        $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }]
+        $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }],
       },
       '-__v'
     )
@@ -86,12 +84,12 @@ export default {
         // handle errors
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
-            message: 'No map exists with id ' + mapID
+            message: 'No map exists with id ' + mapID,
           });
         }
 
         return res.status(500).send({
-          message: 'Error getting map with id ' + mapID
+          message: 'Error getting map with id ' + mapID,
         });
       });
   },
@@ -103,7 +101,7 @@ export default {
     if (!req.body.map) {
       // if no map was actually sent, respond with error
       return res.status(400).send({
-        message: 'MapInfo data cannot be blank.'
+        message: 'MapInfo data cannot be blank.',
       });
     } else {
       // if map included in request, assign that to the variable
@@ -117,7 +115,7 @@ export default {
     // TODO - store ownerID as array of owners (maybe array of objs for permissions)
     await MapInfo.findOne({
       _id: mapID,
-      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
     })
       .then(async (map) => {
         if (!map) {
@@ -137,7 +135,7 @@ export default {
         // TODO - Write error handler in express to do this properly (somehow -_-)
         console.log(err);
         res.status(500).send({
-          message: 'Error getting map with id ' + mapID
+          message: 'Error getting map with id ' + mapID,
         });
       });
   },
@@ -147,7 +145,7 @@ export default {
 
     MapInfo.findOne({
       _id: mapID,
-      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
     })
       .then(async (map: any) => {
         return await map.remove();
@@ -174,5 +172,5 @@ export default {
         console.log(err);
         next(err);
       });
-  }
+  },
 };

@@ -10,9 +10,7 @@ const addPlayerMiddleware = {
     );
 
     if (!campaign) {
-      throw new Error(
-        'Insufficient permissions to add to campaign or campaign does not exist'
-      );
+      throw new Error('Insufficient permissions to add to campaign or campaign does not exist');
     }
 
     // if player is changed, add it to read permissions for campaign unless blank
@@ -48,7 +46,7 @@ const addPlayerMiddleware = {
         campaign.players.splice(index, 1);
       }
     }
-  }
+  },
 };
 
 Token.pre('save', addPlayerMiddleware.save);

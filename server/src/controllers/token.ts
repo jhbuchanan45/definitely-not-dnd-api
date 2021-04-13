@@ -11,13 +11,13 @@ export const generateTokenTypes = (Token: Model<any>) => {
       {
         path: 'classes._id',
         select: '-__v -readIds -writeIds -ownerId',
-        match: classReadQuery(req)
+        match: classReadQuery(req),
       },
       {
         path: 'inventory.details',
         select: '-__v -readIds -writeIds -ownerId',
-        match: itemReadQuery(req)
-      }
+        match: itemReadQuery(req),
+      },
     ];
   };
 
@@ -36,9 +36,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
         .catch((err) => {
           // on error send back error message or generic error message
           res.status(500).send({
-            message:
-              err.message ||
-              'Some error occurred while getting tokens. (Check campaign ID)'
+            message: err.message || 'Some error occurred while getting tokens. (Check campaign ID)',
           });
         });
     },
@@ -49,7 +47,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
       if (!req.body.token) {
         // if no token was actually sent, respond with error
         return res.status(400).send({
-          message: 'Token cannot be blank.'
+          message: 'Token cannot be blank.',
         });
       } else {
         // if token included in request, assign that to the variable
@@ -77,9 +75,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
         .catch((err) => {
           // on error, return error message or generic error message
           res.status(500).send({
-            message:
-              err.message ||
-              'Some error occurred when creating the token, plase try again later.'
+            message: err.message || 'Some error occurred when creating the token, plase try again later.',
           });
         });
     },
@@ -91,7 +87,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
       Token.findOne(
         {
           _id: tokenID,
-          $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }]
+          $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }],
         },
         '-__v'
       )
@@ -111,12 +107,12 @@ export const generateTokenTypes = (Token: Model<any>) => {
           // handle errors
           if (err.kind === 'ObjectId') {
             return res.status(404).send({
-              message: 'No token exists with id ' + tokenID
+              message: 'No token exists with id ' + tokenID,
             });
           }
 
           return res.status(500).send({
-            message: 'Error getting token with id ' + tokenID
+            message: 'Error getting token with id ' + tokenID,
           });
         });
     },
@@ -128,7 +124,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
       if (!req.body.token) {
         // if no token was actually sent, respond with error
         return res.status(400).send({
-          message: 'Token data cannot be blank.'
+          message: 'Token data cannot be blank.',
         });
       } else {
         // if token included in request, assign that to the variable
@@ -141,7 +137,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
       // TODO - store ownerID as array of owners (maybe array of objs for permissions)
       await Token.findOne({
         _id: tokenID,
-        $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+        $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
       })
         .then(async (token) => {
           if (!token) {
@@ -162,7 +158,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
           // TODO - Write error handler in express to do this properly (somehow -_-)
           console.log(err);
           res.status(500).send({
-            message: 'Error getting token with id ' + tokenID
+            message: 'Error getting token with id ' + tokenID,
           });
         });
     },
@@ -172,7 +168,7 @@ export const generateTokenTypes = (Token: Model<any>) => {
 
       Token.findOne({
         _id: tokenID,
-        $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+        $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
       })
         .then(async (token) => {
           return await token.remove();
@@ -199,6 +195,6 @@ export const generateTokenTypes = (Token: Model<any>) => {
           console.log(err);
           next(err);
         });
-    }
+    },
   };
 };

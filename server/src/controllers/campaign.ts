@@ -4,7 +4,7 @@ import User from '../models/user';
 // populate query
 const populateQuery = [
   { path: 'players', select: 'name image classes.level race campaignId' },
-  { path: 'lastMap', select: 'name image' }
+  { path: 'lastMap', select: 'name image' },
 ];
 
 export default {
@@ -21,7 +21,7 @@ export default {
       .catch((err) => {
         // on error send back error message or generic error message
         res.status(500).send({
-          message: err.message || 'Error occurred while getting campaigns.'
+          message: err.message || 'Error occurred while getting campaigns.',
         });
       });
   },
@@ -32,7 +32,7 @@ export default {
     if (!req.body.campaign) {
       // if no campaign was actually sent, respond with error
       return res.status(400).send({
-        message: 'Campaign cannot be blank.'
+        message: 'Campaign cannot be blank.',
       });
     } else {
       // if campaign included in request, assign that to the variable
@@ -67,9 +67,7 @@ export default {
       .catch((err) => {
         // on error, return error message or generic error message
         res.status(500).send({
-          message:
-            err.message ||
-            'Some error occurred when creating the Campaign, plase try again later.'
+          message: err.message || 'Some error occurred when creating the Campaign, plase try again later.',
         });
       });
   },
@@ -81,7 +79,7 @@ export default {
     Campaign.findOne(
       {
         _id: campaignID,
-        $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }]
+        $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }],
       },
       '-__v'
     )
@@ -102,12 +100,12 @@ export default {
         // handle errors
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
-            message: 'No campaign exists with id ' + campaignID
+            message: 'No campaign exists with id ' + campaignID,
           });
         }
 
         return res.status(500).send({
-          message: 'Error getting campaign with id ' + campaignID
+          message: 'Error getting campaign with id ' + campaignID,
         });
       });
   },
@@ -119,7 +117,7 @@ export default {
     if (!req.body.campaign) {
       // if no campaign was actually sent, respond with error
       return res.status(400).send({
-        message: 'Campaign data cannot be blank.'
+        message: 'Campaign data cannot be blank.',
       });
     } else {
       // if campaign included in request, assign that to the variable
@@ -131,7 +129,7 @@ export default {
     // update campaign with given ID if the user has write privileges
     await Campaign.findOne({
       _id: campaignID,
-      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
     })
       .then(async (campaign) => {
         if (!campaign) {
@@ -158,7 +156,7 @@ export default {
         // TODO - Write error handler in express to do this properly (somehow -_-)
         console.log(err);
         res.status(500).send({
-          message: 'Error getting campaign with id ' + campaignID
+          message: 'Error getting campaign with id ' + campaignID,
         });
       });
   },
@@ -168,7 +166,7 @@ export default {
 
     Campaign.findOne({
       _id: campaignID,
-      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
     })
       .then(async (campaign) => {
         return await campaign?.remove();
@@ -195,5 +193,5 @@ export default {
         console.log(err);
         next(err);
       });
-  }
+  },
 };

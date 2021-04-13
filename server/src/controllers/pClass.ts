@@ -4,19 +4,11 @@ export const classReadQuery = (req, classID = null) => {
   if (classID) {
     return {
       _id: classID,
-      $or: [
-        { ownerId: req.user.sub },
-        { readIds: req.user.sub },
-        { public: true }
-      ]
+      $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }, { public: true }],
     };
   } else {
     return {
-      $or: [
-        { ownerId: req.user.sub },
-        { readIds: req.user.sub },
-        { public: true }
-      ]
+      $or: [{ ownerId: req.user.sub }, { readIds: req.user.sub }, { public: true }],
     };
   }
 };
@@ -25,7 +17,7 @@ export const classWriteQuery = (req, classID = null) => {
   if (classID) {
     return {
       _id: classID,
-      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }]
+      $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }],
     };
   } else {
     return { $or: [{ ownerId: req.user.sub }, { writeIds: req.user.sub }] };
@@ -45,7 +37,7 @@ export default {
       .catch((err) => {
         // on error send back error message or generic error message
         res.status(500).send({
-          message: err.message || 'Some error occurred while getting classes.'
+          message: err.message || 'Some error occurred while getting classes.',
         });
       });
   },
@@ -56,7 +48,7 @@ export default {
     if (!req.body.pClass) {
       // if no pClass was actually sent, respond with error
       return res.status(400).send({
-        message: 'Class cannot be blank.'
+        message: 'Class cannot be blank.',
       });
     } else {
       // if pClass included in request, assign that to the variable
@@ -84,9 +76,7 @@ export default {
       .catch((err) => {
         // on error, return error message or generic error message
         res.status(500).send({
-          message:
-            err.message ||
-            'Some error occurred when creating the class, plase try again later.'
+          message: err.message || 'Some error occurred when creating the class, plase try again later.',
         });
       });
   },
@@ -112,12 +102,12 @@ export default {
         // handle errors
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
-            message: 'No class exists with id ' + pClassID
+            message: 'No class exists with id ' + pClassID,
           });
         }
 
         return res.status(500).send({
-          message: 'Error getting pClass with id ' + pClassID
+          message: 'Error getting pClass with id ' + pClassID,
         });
       });
   },
@@ -129,7 +119,7 @@ export default {
     if (!req.body.pClass) {
       // if no pClass was actually sent, respond with error
       return res.status(400).send({
-        message: 'Class data cannot be blank.'
+        message: 'Class data cannot be blank.',
       });
     } else {
       // if pClass included in request, assign that to the variable
@@ -161,7 +151,7 @@ export default {
         // TODO - Write error handler in express to do this properly (somehow -_-)
         console.log(err);
         res.status(500).send({
-          message: 'Error getting class with id ' + pClassID
+          message: 'Error getting class with id ' + pClassID,
         });
       });
   },
@@ -197,5 +187,5 @@ export default {
         console.log(err);
         next(err);
       });
-  }
+  },
 };

@@ -1,14 +1,9 @@
 import { getWritePermissions } from '../middlewares/getPermissions';
-import {
-  defaultSafeReadQuery,
-  defaultSafeWriteQuery
-} from '../middlewares/rolePermissionsControl';
+import { defaultSafeReadQuery, defaultSafeWriteQuery } from '../middlewares/rolePermissionsControl';
 import Item from '../models/item';
 
-export const itemReadQuery = (req, itemID = null) =>
-  defaultSafeReadQuery(req, itemID, false);
-export const itemWriteQuery = (req, itemID = null) =>
-  defaultSafeWriteQuery(req, itemID, false);
+export const itemReadQuery = (req, itemID = null) => defaultSafeReadQuery(req, itemID, false);
+export const itemWriteQuery = (req, itemID = null) => defaultSafeWriteQuery(req, itemID, false);
 
 export default {
   get: async (req: any, res: any) => {
@@ -30,7 +25,7 @@ export default {
       .catch((err) => {
         // on error send back error message or generic error message
         res.status(500).send({
-          message: err.message || 'Some error occurred while getting items.'
+          message: err.message || 'Some error occurred while getting items.',
         });
       });
   },
@@ -43,7 +38,7 @@ export default {
     if (!req.body.item) {
       // if no item was actually sent, respond with error
       return res.status(400).send({
-        message: 'Item cannot be blank.'
+        message: 'Item cannot be blank.',
       });
     } else {
       // if item included in request, assign that to the variable
@@ -52,10 +47,7 @@ export default {
       const { readIds, writeIds, src, ...cleanItem } = fullItem;
       rItem = cleanItem;
 
-      if (
-        writeContentPerms.includes(src) ||
-        req.user.permissions.includes('admin')
-      ) {
+      if (writeContentPerms.includes(src) || req.user.permissions.includes('admin')) {
         rItem.src = src;
       }
     }
@@ -78,9 +70,7 @@ export default {
       .catch((err) => {
         // on error, return error message or generic error message
         res.status(500).send({
-          message:
-            err.message ||
-            'Some error occurred when creating the item, plase try again later.'
+          message: err.message || 'Some error occurred when creating the item, plase try again later.',
         });
       });
   },
@@ -105,12 +95,12 @@ export default {
         // handle errors
         if (err.kind === 'ObjectId') {
           return res.status(404).send({
-            message: 'No item exists with id ' + itemID
+            message: 'No item exists with id ' + itemID,
           });
         }
 
         return res.status(500).send({
-          message: 'Error getting item with id ' + itemID
+          message: 'Error getting item with id ' + itemID,
         });
       });
   },
@@ -125,7 +115,7 @@ export default {
     if (!req.body.item) {
       // if no item was actually sent, respond with error
       return res.status(400).send({
-        message: 'Item data cannot be blank.'
+        message: 'Item data cannot be blank.',
       });
     } else {
       // if item included in request, assign that to the variable
@@ -144,10 +134,7 @@ export default {
           throw new Error('No item exists with that ID');
         }
         // if both existing and new src can be written to by the user
-        if (
-          writeContentPerms.includes(reqSrc) ||
-          req.user.permissions.includes('admin')
-        ) {
+        if (writeContentPerms.includes(reqSrc) || req.user.permissions.includes('admin')) {
           eItem.src = reqSrc;
         } else {
           eItem.src = 'homebrew';
@@ -166,7 +153,7 @@ export default {
         // TODO - Write error handler in express to do this properly (somehow -_-)
         console.log(err);
         res.status(500).send({
-          message: 'Error getting item with id ' + itemID
+          message: 'Error getting item with id ' + itemID,
         });
         next(err);
       });
@@ -201,5 +188,5 @@ export default {
         console.log(err);
         next(err);
       });
-  }
+  },
 };

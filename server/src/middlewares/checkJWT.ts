@@ -9,11 +9,11 @@ export default jwt({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://dev-z9ydxjd6.eu.auth0.com/.well-known/jwks.json`
+    jwksUri: `https://dev-z9ydxjd6.eu.auth0.com/.well-known/jwks.json`,
   }),
 
   // Validate the audience and the issuer.
   audience: 'https://api.definitelynotdnd.com',
   issuer: `https://dev-z9ydxjd6.eu.auth0.com/`,
-  algorithms: ['RS256']
+  algorithms: ['RS256'],
 });

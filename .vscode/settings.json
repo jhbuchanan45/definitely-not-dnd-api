@@ -8,5 +8,7 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   "eslint.packageManager": "yarn",
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "editor.insertSpaces": false,
+  "prettier.useTabs": true
 }
