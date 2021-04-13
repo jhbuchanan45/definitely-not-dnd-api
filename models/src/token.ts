@@ -9,7 +9,7 @@ const keyStatsGen = () => {
     keyStatsOutput[coreStats[stat]] = {
       raw: { type: Number, default: 10 },
       base: { type: Number, default: 0 },
-      mod: { type: Number, default: 0 }
+      mod: { type: Number, default: 0 },
     };
   }
 
@@ -17,7 +17,7 @@ const keyStatsGen = () => {
 };
 
 const prof = {
-  level: { type: Number, default: 0, min: -10, max: 10 }
+  level: { type: Number, default: 0, min: -10, max: 10 },
 };
 
 const keyStats = keyStatsGen();
@@ -26,12 +26,12 @@ const proficiencies = {
   armour: [{ type: String, default: [] }],
   weapons: [{ type: String, default: [] }],
   tools: [{ type: String, default: [] }],
-  languages: [{ type: String, default: [] }]
+  languages: [{ type: String, default: [] }],
 };
 
 const deathSaving = {
   success: { type: Number, default: 0, min: 0, max: 3 },
-  failure: { type: Number, default: 0, min: 0, max: 3 }
+  failure: { type: Number, default: 0, min: 0, max: 3 },
 };
 
 const HP = {
@@ -39,13 +39,13 @@ const HP = {
   max: { base: { type: Number, default: 0 } },
   tmp: { base: { type: Number, default: 0 } },
   hit: { base: { type: String, default: '' } },
-  deathSaving
+  deathSaving,
 };
 
 const savingThrow = {
   prof: prof,
   mod: { type: Number, default: 0 },
-  bns: { type: Number, default: 0 }
+  bns: { type: Number, default: 0 },
 };
 
 const savingThrows = {
@@ -55,12 +55,12 @@ const savingThrows = {
   INT: savingThrow,
   WIS: savingThrow,
   CHA: savingThrow,
-  XTR: savingThrow
+  XTR: savingThrow,
 };
 
 const resist = {
   vul: { base: [{ type: String, default: [] }] },
-  res: { base: [{ type: String, default: [] }] }
+  res: { base: [{ type: String, default: [] }] },
 };
 
 const speed = {
@@ -68,7 +68,7 @@ const speed = {
   swimming: { base: { type: Number, default: 15 } },
   climbing: { base: { type: Number, default: 15 } },
   flying: { base: { type: Number, default: 0 } },
-  burrowing: { base: { type: Number, default: 0 } }
+  burrowing: { base: { type: Number, default: 0 } },
 };
 
 const skillCheck = (defaultStat: String = 'STR', label: String = 'Skill') => {
@@ -77,7 +77,7 @@ const skillCheck = (defaultStat: String = 'STR', label: String = 'Skill') => {
     mod: { type: Number, default: 0 },
     bns: { type: Number, default: 0 },
     label: { type: String, default: label },
-    check: { type: String, enum: coreStats, default: defaultStat }
+    check: { type: String, enum: coreStats, default: defaultStat },
   };
 };
 
@@ -85,9 +85,9 @@ const classFormat = {
   level: { type: Number, default: 0, required: true },
   label: { type: String, default: 'New Class' },
   data: {
-    choices: { type: Map, of: String }
+    choices: { type: Map, of: String },
   },
-  _id: { type: mongoose.Schema.Types.ObjectId, ref: 'pClass', required: true }
+  _id: { type: mongoose.Schema.Types.ObjectId, ref: 'pClass', required: true },
 };
 
 const skills = {
@@ -108,14 +108,14 @@ const skills = {
   religion: skillCheck('INT', 'Religion'),
   sleightOfHand: skillCheck('DEX', 'Sleight of Hand'),
   survival: skillCheck('WIS', 'Survival'),
-  extra: [skillCheck()]
+  extra: [skillCheck()],
 };
 
 const vision = {
   darkvision: { base: { type: Number, default: 0 } },
   blindsight: { base: { type: Number, default: 0 } },
   tremorsense: { base: { type: Number, default: 0 } },
-  truesight: { base: { type: Number, default: 0 } }
+  truesight: { base: { type: Number, default: 0 } },
 };
 
 const inventoryItem = {
@@ -123,10 +123,10 @@ const inventoryItem = {
   details: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Item',
-    required: true
+    required: true,
   },
   equipped: { type: Boolean, default: false },
-  _id: false
+  _id: false,
 };
 
 const Token = new Schema(
@@ -135,7 +135,7 @@ const Token = new Schema(
     campaignId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      index: true
+      index: true,
     },
     image: { type: String, required: true, default: '' },
     name: { type: String, required: true, default: 'New Character' },
@@ -158,10 +158,10 @@ const Token = new Schema(
       proficiencies,
       HP,
       speed,
-      vision
+      vision,
     },
     pos: { x: { type: Number, default: 0 }, y: { type: Number, default: 0 } },
-    size: { type: Number, default: 0 }
+    size: { type: Number, default: 0 },
   },
   { typePojoToMixed: false }
 );

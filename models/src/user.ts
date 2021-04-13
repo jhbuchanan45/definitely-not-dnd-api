@@ -6,8 +6,8 @@ const User = new Schema({
   lastCampaign: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    default: null
-  }
+    default: null,
+  },
 });
 
 export { User };

@@ -4,33 +4,30 @@ const Schema = mongoose.Schema;
 
 const modifierOptions = {
   discriminatorKey: 'target',
-  _id: false
+  _id: false,
 };
 
-export const genericModifier = new Schema(
-  { multiclass: { type: Boolean } },
-  modifierOptions
-);
+export const genericModifier = new Schema({ multiclass: { type: Boolean } }, modifierOptions);
 
 const intT1 = {
   mode: { type: String, required: true, enum: ['set', 'add'] },
   value: { type: Number, required: true },
-  _id: false
+  _id: false,
 };
 
 const intT2 = {
   ...intT1,
-  t2: { type: String, required: true }
+  t2: { type: String, required: true },
 };
 
 const strT1 = {
   value: { type: String, required: true },
-  _id: false
+  _id: false,
 };
 
 const strT2 = {
   ...strT1,
-  t2: { type: String, required: true }
+  t2: { type: String, required: true },
 };
 
 const feature = new Schema({
@@ -39,13 +36,13 @@ const feature = new Schema({
   description: { type: String },
   multiclass: { type: Boolean },
   level: { type: Number, required: true, min: 0, max: 40 },
-  modifiers: [genericModifier]
+  modifiers: [genericModifier],
 });
 
 const choiceSchema = new Schema({}, { discriminatorKey: 'target' }); // placeholder for actual choice schema
 
 const choicesSchema = new Schema({
-  choices: [choiceSchema]
+  choices: [choiceSchema],
 });
 
 const targets = {
@@ -53,8 +50,8 @@ const targets = {
   initiative: {
     schema: new Schema({
       ...intT2,
-      mode: { type: String, required: true, enum: ['set', 'add', 'advantage'] }
-    })
+      mode: { type: String, required: true, enum: ['set', 'add', 'advantage'] },
+    }),
   },
   proficiency: { schema: new Schema(intT1) },
   resist: { schema: new Schema(strT2) },
@@ -66,10 +63,10 @@ const targets = {
       mode: {
         type: String,
         required: true,
-        num: ['set', 'add', 'base', 'coreMod']
+        num: ['set', 'add', 'base', 'coreMod'],
       },
-      coreMod: { type: String, enum: coreStats }
-    })
+      coreMod: { type: String, enum: coreStats },
+    }),
   },
   skills: {
     schema: new Schema({
@@ -77,9 +74,9 @@ const targets = {
       mode: {
         type: String,
         required: true,
-        enum: ['set', 'add', 'prof', 'advantage']
-      }
-    })
+        enum: ['set', 'add', 'prof', 'advantage'],
+      },
+    }),
   },
   savingThrows: {
     schema: new Schema({
@@ -87,21 +84,21 @@ const targets = {
       mode: {
         type: String,
         required: true,
-        enum: ['set', 'add', 'prof', 'advantage']
-      }
-    })
+        enum: ['set', 'add', 'prof', 'advantage'],
+      },
+    }),
   },
   proficiencies: { schema: new Schema(strT2) },
   HP: {
     schema: new Schema({
       ...intT2,
-      value: { type: Schema.Types.Mixed, required: true }
+      value: { type: Schema.Types.Mixed, required: true },
       // mode: { type: String, required: true, enum: ["set", "add", "hit"] }
-    })
+    }),
   },
   speed: { schema: new Schema(intT2) },
   vision: { schema: new Schema(intT2) },
-  choice: { schema: choicesSchema }
+  choice: { schema: choicesSchema },
 };
 
 // discrimator from target schema
@@ -141,13 +138,13 @@ const pClass = new Schema(
     multiclassReq: [
       {
         core: { type: String, enum: coreStats, required: true },
-        val: { type: Number, min: 0, max: 30 }
-      }
+        val: { type: Number, min: 0, max: 30 },
+      },
     ],
     features: [feature],
     readIds: [{ type: String, default: [] }],
     writeIds: [{ type: String, default: [] }],
-    public: { type: Boolean }
+    public: { type: Boolean },
   },
   { typePojoToMixed: false }
 );

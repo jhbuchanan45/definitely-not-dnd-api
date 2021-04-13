@@ -8,7 +8,7 @@ const Campaign = new Schema({
   players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],
   readIds: [{ type: String, default: [] }],
   writeIds: [{ type: String, default: [] }],
-  lastMap: { type: mongoose.Schema.Types.ObjectId, ref: 'Map' }
+  lastMap: { type: mongoose.Schema.Types.ObjectId, ref: 'Map' },
 });
 
 export { Campaign };

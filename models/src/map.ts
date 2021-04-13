@@ -19,7 +19,7 @@ const Map = new Schema(
     campaignId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      index: true
+      index: true,
     },
     name: { type: String, default: 'New Map' },
     image: { type: String, default: 'test.png' },
@@ -28,7 +28,7 @@ const Map = new Schema(
     selectedToken: { type: String, default: '0' },
     scale: { type: Number, default: 0 },
     pos: { x: Number, y: Number, default: { x: 0, y: 0 } },
-    sidebarExpanded: { type: Boolean, default: true }
+    sidebarExpanded: { type: Boolean, default: true },
   },
   { typePojoToMixed: false }
 );
