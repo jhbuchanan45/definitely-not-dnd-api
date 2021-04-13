@@ -11,20 +11,26 @@ import mongoose from 'mongoose';
 // const tiles = [tile];
 
 const Schema = mongoose.Schema;
-const Map = new Schema({
+const Map = new Schema(
+  {
     ownerId: { type: String, required: true },
     readIds: [{ type: String, default: [] }],
     writeIds: [{ type: String, default: [] }],
-    campaignId: { type: mongoose.Schema.Types.ObjectId, required: true, index: true },
-    name: { type: String, default: "New Map" },
-    image: { type: String, default: "test.png" },
+    campaignId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      index: true
+    },
+    name: { type: String, default: 'New Map' },
+    image: { type: String, default: 'test.png' },
     tokens: { type: [mongoose.Schema.Types.ObjectId], default: [] },
     sqSize: { type: Number, default: 25 },
-    selectedToken: { type: String, default: "0" },
+    selectedToken: { type: String, default: '0' },
     scale: { type: Number, default: 0 },
     pos: { x: Number, y: Number, default: { x: 0, y: 0 } },
     sidebarExpanded: { type: Boolean, default: true }
-},
-    { typePojoToMixed: false });
+  },
+  { typePojoToMixed: false }
+);
 
 export { Map };
