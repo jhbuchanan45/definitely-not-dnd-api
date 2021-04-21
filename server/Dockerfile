@@ -1,4 +1,4 @@
-FROM node:14.16.1-alpine3.13
+FROM node:15-alpine3.13
 
 RUN yarn set version berry
 
@@ -14,9 +14,11 @@ COPY .yarn ./.yarn/
 
 COPY .yarnrc.yml package.json yarn.lock ./
 
-COPY server ./server/
+COPY server/package.json ./server/
 
 RUN yarn install
+
+COPY server ./server/
 
 RUN yarn build
 

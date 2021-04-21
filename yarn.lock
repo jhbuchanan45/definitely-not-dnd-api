@@ -5,7 +5,7 @@ __metadata:
   version: 4
   cacheKey: 7
 
-"@babel/cli@npm:^7.12.10, @babel/cli@npm:^7.13.14":
+"@babel/cli@npm:^7.13.14":
   version: 7.13.14
   resolution: "@babel/cli@npm:7.13.14"
   dependencies:
@@ -58,7 +58,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.13.15, @babel/core@npm:^7.12.10, @babel/core@npm:^7.13.14":
+"@babel/core@npm:7.13.15, @babel/core@npm:^7.13.15":
   version: 7.13.15
   resolution: "@babel/core@npm:7.13.15"
   dependencies:
@@ -357,7 +357,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/node@npm:^7.12.10, @babel/node@npm:^7.13.13":
+"@babel/node@npm:^7.13.13":
   version: 7.13.13
   resolution: "@babel/node@npm:7.13.13"
   dependencies:
@@ -998,7 +998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-runtime@npm:^7.13.10":
+"@babel/plugin-transform-runtime@npm:^7.13.15":
   version: 7.13.15
   resolution: "@babel/plugin-transform-runtime@npm:7.13.15"
   dependencies:
@@ -1106,7 +1106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.12.11, @babel/preset-env@npm:^7.13.12":
+"@babel/preset-env@npm:^7.13.15":
   version: 7.13.15
   resolution: "@babel/preset-env@npm:7.13.15"
   dependencies:
@@ -1200,7 +1200,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.12.7, @babel/preset-typescript@npm:^7.13.0":
+"@babel/preset-typescript@npm:^7.13.0":
   version: 7.13.0
   resolution: "@babel/preset-typescript@npm:7.13.0"
   dependencies:
@@ -1213,7 +1213,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/register@npm:^7.12.10, @babel/register@npm:^7.13.14, @babel/register@npm:^7.13.8":
+"@babel/register@npm:^7.13.14, @babel/register@npm:^7.13.8":
   version: 7.13.14
   resolution: "@babel/register@npm:7.13.14"
   dependencies:
@@ -1306,17 +1306,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jhbuchanan45/dnd-models@workspace:models"
   dependencies:
-    "@babel/cli": ^7.12.10
-    "@babel/core": ^7.12.10
-    "@babel/node": ^7.12.10
-    "@babel/preset-env": ^7.12.11
-    "@babel/preset-typescript": ^7.12.7
-    "@babel/register": ^7.12.10
+    "@babel/cli": ^7.13.14
+    "@babel/core": ^7.13.15
+    "@babel/node": ^7.13.13
+    "@babel/preset-env": ^7.13.15
+    "@babel/preset-typescript": ^7.13.0
+    "@babel/register": ^7.13.14
     "@types/node": ^14.14.37
     mongoose: ^5.12.3
-    mongoose-schema-jsonschema: ^1.4.4
     ts-node: ^9.1.1
-    typescript: ^4.2.3
+    typescript: ^4.2.4
   languageName: unknown
   linkType: soft
 
@@ -1373,6 +1372,13 @@ __metadata:
     mkdirp: ^1.0.4
     rimraf: ^3.0.2
   checksum: d178d86a0a96e5aa12e6d70c00d50eb3bb9a58c0cf1c36e1d7f240acb4ae3f14642c6314659c438ea409a509f08c2a62e29c9346a033e554c3f6921cdb293219
+  languageName: node
+  linkType: hard
+
+"@panva/asn1.js@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@panva/asn1.js@npm:1.0.0"
+  checksum: 0563c1372d99051d8e2268541a6ef9ec5d0495e9b943b0b1b738eb40ffd21e8bf7690f313d5ce86cccb32e646f9bb75f1af3cd45bce5d04b85ad9c04f0b596aa
   languageName: node
   linkType: hard
 
@@ -1643,7 +1649,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"accepts@npm:~1.3.7":
+"accepts@npm:^1.3.7, accepts@npm:~1.3.7":
   version: 1.3.7
   resolution: "accepts@npm:1.3.7"
   dependencies:
@@ -1907,15 +1913,6 @@ __metadata:
   bin:
     atob: bin/atob.js
   checksum: 597c0d1a740bb6522c98bea8fe362ae9420b4203af588d2bd470326d9abd4504264956b8355923d7019a21527ef5e6526a7b4455862ec5178ccd81e0ea289d5f
-  languageName: node
-  linkType: hard
-
-"axios@npm:^0.21.1":
-  version: 0.21.1
-  resolution: "axios@npm:0.21.1"
-  dependencies:
-    follow-redirects: ^1.10.0
-  checksum: 864fb7b5d077d236737f10adca53bf451a93f35a15271f56fba8da07265a02d26b7d881b935a6697dc6adb0549ea3e56d2eecb403edaa3bb78f6479901c10f69
   languageName: node
   linkType: hard
 
@@ -2364,7 +2361,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"content-type@npm:~1.0.4":
+"content-type@npm:^1.0.4, content-type@npm:~1.0.4":
   version: 1.0.4
   resolution: "content-type@npm:1.0.4"
   checksum: ff6e19cbf281c23d5608723a6dc60ac97e2280bd4d21602511283112321e6c1555895e395555e367672b54a0f1585276284b7c3c8be313aca73902ac2f2609fd
@@ -2459,6 +2456,13 @@ __metadata:
   dependencies:
     array-find-index: ^1.0.1
   checksum: 1968b4b57677da838b8b3f0db806e1eb4f59cc95addb6e0fd3098703fe31a3e7e5e437f253aa74408a80699e7cc59947881a7e678d0ced887619077dcccdf70f
+  languageName: node
+  linkType: hard
+
+"dataloader@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "dataloader@npm:2.0.0"
+  checksum: 0165c2e80751d269c33d2a14b0078a4f3853cb010e2531e7aa99523aba8d0cdc922b9ad67e4c2bb9074c90e0ee0a41b6e7f5f63c40d31224a71c8a0b703f4be3
   languageName: node
   linkType: hard
 
@@ -2568,11 +2572,12 @@ __metadata:
   dependencies:
     "@typescript-eslint/eslint-plugin": ^4.22.0
     "@typescript-eslint/parser": ^4.22.0
-    eslint: ^7.23.0
+    eslint: ^7.24.0
     eslint-config-prettier: ^8.2.0
     eslint-plugin-prettier: ^3.3.1
+    mongodb: ^3.6.6
     prettier: 2.2.1
-    typescript: ^4.2.3
+    typescript: ^4.2.4
   languageName: unknown
   linkType: soft
 
@@ -2844,9 +2849,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.23.0":
-  version: 7.23.0
-  resolution: "eslint@npm:7.23.0"
+"eslint@npm:^7.24.0":
+  version: 7.24.0
+  resolution: "eslint@npm:7.24.0"
   dependencies:
     "@babel/code-frame": 7.12.11
     "@eslint/eslintrc": ^0.4.0
@@ -2887,7 +2892,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: f444869506eb0b53fdc6f6f6508b9f5daed51034af0289e6b201f996e7f2d06134f765ef598568269d2a0575dc9da5d3308bd2716f795b789d92e7febb654aab
+  checksum: 8130aacc3698a730ba8fa10ac9e1436151181c34cad265c21c97708e62dba714b6f3cc4cb7a1d343918da3d35a5913505ccf53cfbdc1fa8d62d326b7e35b7aae
   languageName: node
   linkType: hard
 
@@ -2970,6 +2975,20 @@ __metadata:
     snapdragon: ^0.8.1
     to-regex: ^3.0.1
   checksum: 9aadab00ff10da89d3bdbcb92fc48f152977e8f986b227955b17601cb7eb65a63c9b35811d78ce8ff534fc20faab759a043f0f1c71b904f5d37a35a074ff6fb0
+  languageName: node
+  linkType: hard
+
+"express-graphql@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "express-graphql@npm:0.12.0"
+  dependencies:
+    accepts: ^1.3.7
+    content-type: ^1.0.4
+    http-errors: 1.8.0
+    raw-body: ^2.4.1
+  peerDependencies:
+    graphql: ^14.7.0 || ^15.3.0
+  checksum: d0b1aa947c7fcdb6a181d3e6153d6a5f56305239dc8b7c02b2b2c7a80f0c7da275503fb266f641149cd826406ff56603162a9d2238eda6f1cb12924b63eab17c
   languageName: node
   linkType: hard
 
@@ -3235,16 +3254,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.10.0":
-  version: 1.13.3
-  resolution: "follow-redirects@npm:1.13.3"
-  peerDependenciesMeta:
-    debug:
-      optional: true
-  checksum: 9ad74c3b66ad5c32d8c009a2afb4e5c1b9e5dbe1f631419296c21f8e4f9976ed2c52f9a676c4acdd1d7f41a8f17a03dfaa3704993b25b5965eb11bc9dc9a8ef5
-  languageName: node
-  linkType: hard
-
 "for-in@npm:^1.0.2":
   version: 1.0.2
   resolution: "for-in@npm:1.0.2"
@@ -3457,6 +3466,77 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"graphql-compose-connection@npm:8.0.1":
+  version: 8.0.1
+  resolution: "graphql-compose-connection@npm:8.0.1"
+  peerDependencies:
+    graphql-compose: ^7.15.0
+  checksum: 7ce4d50eba5a623e2da22ea5967310f0e8afe11e8939abaf6cffebef537158aa0f93307aab418dac6115df616a402abd995e984edc2141733cb35a3263b25b0e
+  languageName: node
+  linkType: hard
+
+"graphql-compose-mongoose@npm:^9.2.2":
+  version: 9.2.2
+  resolution: "graphql-compose-mongoose@npm:9.2.2"
+  dependencies:
+    dataloader: ^2.0.0
+    graphql-compose-connection: 8.0.1
+    graphql-compose-pagination: 8.0.2
+  peerDependencies:
+    graphql-compose: ^7.21.4
+    mongoose: ^5.0.0 || ^4.4.0
+  checksum: 0f62913555638cf370e6d25d9eca7b504b8cb4869a2317747794546834f5c83c7e39633dcf0d51c3c1ec08009e4ffbbe3155612f46d1dd0bec0421e30a9edbf4
+  languageName: node
+  linkType: hard
+
+"graphql-compose-pagination@npm:8.0.2":
+  version: 8.0.2
+  resolution: "graphql-compose-pagination@npm:8.0.2"
+  peerDependencies:
+    graphql-compose: ^7.15.0
+  checksum: 45aa94fc008fbcd23a55b062ba5d8ba3cf751af5ee63e24804bc686c04a850c7a1a91412f75e0518edaa70ada5f60bb2e790ee9e4d9547021b99b70d5c462012
+  languageName: node
+  linkType: hard
+
+"graphql-compose@npm:^7.25.1":
+  version: 7.25.1
+  resolution: "graphql-compose@npm:7.25.1"
+  dependencies:
+    graphql-type-json: 0.3.2
+    object-path: 0.11.5
+  peerDependencies:
+    graphql: ^14.2.0 || ^15.0.0
+  checksum: 96aa8a6ab9f2c3b2c97747bb2706aeaa4a88d90c10246d0d40caf8936aeea04e61267fb60db2651e59a6665e58a4a52c911259297c005a63900095dd3881e44f
+  languageName: node
+  linkType: hard
+
+"graphql-tag@npm:^2.12.3":
+  version: 2.12.3
+  resolution: "graphql-tag@npm:2.12.3"
+  dependencies:
+    tslib: ^2.1.0
+  peerDependencies:
+    graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+  checksum: ab3a7cdf57fa213d4f9efd1229476042f7d640376c0389656be43f32d34201f5ed90e60c3a54bcdb12712688136d6d9637bd45964b63f94a9a2c131b0fa78ef5
+  languageName: node
+  linkType: hard
+
+"graphql-type-json@npm:0.3.2":
+  version: 0.3.2
+  resolution: "graphql-type-json@npm:0.3.2"
+  peerDependencies:
+    graphql: ">=0.8.0"
+  checksum: dbc2ca9b003788012b278209a92d9b084ab5061da8c596d0ffd65dce2e770c29d26dded1812186293bb0bf33b476369dcda1576a10cd4e5b12d2458c878977f3
+  languageName: node
+  linkType: hard
+
+"graphql@npm:^15.5.0":
+  version: 15.5.0
+  resolution: "graphql@npm:15.5.0"
+  checksum: 789cdcb069a3e00592e779002217a6bc5fd09efad63ee8c4190c4b3ea96c89010e74f085fb1cba876a0bb0e324e01df2eddb84d79dca90a28e582bc425fef9ef
+  languageName: node
+  linkType: hard
+
 "has-bigints@npm:^1.0.1":
   version: 1.0.1
   resolution: "has-bigints@npm:1.0.1"
@@ -3576,7 +3656,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"http-errors@npm:~1.7.2":
+"http-errors@npm:1.7.3, http-errors@npm:~1.7.2":
   version: 1.7.3
   resolution: "http-errors@npm:1.7.3"
   dependencies:
@@ -3586,6 +3666,19 @@ fsevents@~2.3.1:
     statuses: ">= 1.5.0 < 2"
     toidentifier: 1.0.0
   checksum: 563ae4a3f19c89029212922bade6ffcd0e4b7fa52e539f08c8f6941de7eaccb00bf76cb7692662192f2f0d567d4ac1f9d6a3d0ee70b166c8540cf791497f90ea
+  languageName: node
+  linkType: hard
+
+"http-errors@npm:1.8.0":
+  version: 1.8.0
+  resolution: "http-errors@npm:1.8.0"
+  dependencies:
+    depd: ~1.1.2
+    inherits: 2.0.4
+    setprototypeof: 1.2.0
+    statuses: ">= 1.5.0 < 2"
+    toidentifier: 1.0.0
+  checksum: 95ad78508b2929923dac83edd7ce513db87c4214df83a6664559810566da73d9a6892ffdcd76738d9ab9d33172b4c7e304436a4031d471569a7344396fea0ecb
   languageName: node
   linkType: hard
 
@@ -4045,6 +4138,15 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"jose@npm:^2.0.2":
+  version: 2.0.5
+  resolution: "jose@npm:2.0.5"
+  dependencies:
+    "@panva/asn1.js": ^1.0.0
+  checksum: 7c6eecb0bf26109c1be5a18084276492a957be4876acae2529904c4e54cee50c736a8fe65702bcdd7537313a3a9ff94e44f9987423a59989920018ff144eb936
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -4114,7 +4216,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:^8.1.0, jsonwebtoken@npm:^8.5.1":
+"jsonwebtoken@npm:^8.1.0":
   version: 8.5.1
   resolution: "jsonwebtoken@npm:8.5.1"
   dependencies:
@@ -4143,21 +4245,16 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"jwks-rsa@npm:^1.12.3":
-  version: 1.12.3
-  resolution: "jwks-rsa@npm:1.12.3"
+"jwks-rsa@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "jwks-rsa@npm:2.0.2"
   dependencies:
     "@types/express-jwt": 0.0.42
-    axios: ^0.21.1
     debug: ^4.1.0
-    http-proxy-agent: ^4.0.1
-    https-proxy-agent: ^5.0.0
-    jsonwebtoken: ^8.5.1
+    jose: ^2.0.2
     limiter: ^1.1.5
     lru-memoizer: ^2.1.2
-    ms: ^2.1.2
-    proxy-from-env: ^1.1.0
-  checksum: 8493e6fbf1f8f9999ae6abc3a32fc92a99f8db8af36d272a1389b43afcdba92ead2de476ec04057108e41876d213d9448ddf41f70fa125d79b96b1fa9fd86453
+  checksum: 8730c429576af15de6a25119b9c143bb10269925f88e48b32dcaab9b5c14c4d8c4a91f35c37a5aa5f9c2cca1208189c1405a0fa453e51fab19ec6c8bb1403d32
   languageName: node
   linkType: hard
 
@@ -4694,6 +4791,36 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"mongodb@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "mongodb@npm:3.6.6"
+  dependencies:
+    bl: ^2.2.1
+    bson: ^1.1.4
+    denque: ^1.4.1
+    optional-require: ^1.0.2
+    safe-buffer: ^5.1.2
+    saslprep: ^1.0.0
+  dependenciesMeta:
+    saslprep:
+      optional: true
+  peerDependenciesMeta:
+    aws4:
+      optional: true
+    bson-ext:
+      optional: true
+    kerberos:
+      optional: true
+    mongodb-client-encryption:
+      optional: true
+    mongodb-extjson:
+      optional: true
+    snappy:
+      optional: true
+  checksum: 7c711f82269a98fc331e5d52d3ba02167446d7a44c54f0ab26072d708a804c5082e201abae85dcf01154ac73572e4e7f80f32c0b632b72e92e8e65857f553062
+  languageName: node
+  linkType: hard
+
 "mongoose-legacy-pluralize@npm:1.0.2":
   version: 1.0.2
   resolution: "mongoose-legacy-pluralize@npm:1.0.2"
@@ -4775,7 +4902,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"ms@npm:^2.0.0, ms@npm:^2.1.1, ms@npm:^2.1.2":
+"ms@npm:^2.0.0, ms@npm:^2.1.1":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: 6e721e648a544154d5de4c114b32f573d8027ca8ec505cf6c1105e505986d6ac46934a1256735aa0eece8eb2f5b2a1230503b2dddd3b100f9f016fd8a4f15f33
@@ -4949,6 +5076,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"object-path@npm:0.11.5":
+  version: 0.11.5
+  resolution: "object-path@npm:0.11.5"
+  checksum: a2be57f65eb247161763280e857ddbafcfbb41ad7cfcfb0a78aca2e8adb990a7b5afe6b182c20baf0e218e541ec75c1807fd04d50e3049920c2ec65e6eb9c900
+  languageName: node
+  linkType: hard
+
 "object-visit@npm:^1.0.0":
   version: 1.0.1
   resolution: "object-visit@npm:1.0.1"
@@ -5005,6 +5139,13 @@ fsevents@~2.3.1:
   dependencies:
     wrappy: 1
   checksum: 57afc246536cf6494437f982b26475f22bee860f8b77ce8eb1543f42a8bffe04b2c66ddfea9a16cb25ccb80943f8ee4fc639367ef97b7a6a4f2672eb573963f5
+  languageName: node
+  linkType: hard
+
+"optional-require@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "optional-require@npm:1.0.3"
+  checksum: be8556c35b0f6f76ac3b34587f010ad8fc17f69d1afbd5198fb338c785ebbe8e3c96b5f5222a0853b2c8ab7bfe8127a4f4c795e8795d5656e31c8fd693780ba9
   languageName: node
   linkType: hard
 
@@ -5299,13 +5440,6 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "proxy-from-env@npm:1.1.0"
-  checksum: 6459372a57f3e8ef5211f7847ca2fffabcdd6490005892fcc0dcd62fe2b3551900c8a07fad7df9de3897547b1ab4ac7a7197964cd6fa7e76303caa4936bfaf32
-  languageName: node
-  linkType: hard
-
 "pseudomap@npm:^1.0.1":
   version: 1.0.2
   resolution: "pseudomap@npm:1.0.2"
@@ -5350,6 +5484,18 @@ fsevents@~2.3.1:
     iconv-lite: 0.4.24
     unpipe: 1.0.0
   checksum: 46dc02f8b4f358786d41e18fb55533fbe4702d390e22bbe2b9c98c88dec41cab23ea2315f3ae0bf4bc0213a2872c89943d3df6857f4e21f996ea9d2d92f1bcaa
+  languageName: node
+  linkType: hard
+
+"raw-body@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "raw-body@npm:2.4.1"
+  dependencies:
+    bytes: 3.1.0
+    http-errors: 1.7.3
+    iconv-lite: 0.4.24
+    unpipe: 1.0.0
+  checksum: dc56e010d276f2fc3a17c2dd071f857917cd3734f64051488c845a9878a1eb47e03a9644861f135568d8ab4c2062072700b73060956b36f3a987025bc809402f
   languageName: node
   linkType: hard
 
@@ -5762,10 +5908,10 @@ fsevents@~2.3.1:
   resolution: "server@workspace:server"
   dependencies:
     "@babel/cli": ^7.13.14
-    "@babel/core": ^7.13.14
+    "@babel/core": ^7.13.15
     "@babel/node": ^7.13.13
-    "@babel/plugin-transform-runtime": ^7.13.10
-    "@babel/preset-env": ^7.13.12
+    "@babel/plugin-transform-runtime": ^7.13.15
+    "@babel/preset-env": ^7.13.15
     "@babel/preset-typescript": ^7.13.0
     "@babel/register": ^7.13.14
     "@babel/runtime": ^7.13.10
@@ -5776,14 +5922,19 @@ fsevents@~2.3.1:
     cors: ^2.8.5
     dotenv: ^8.2.0
     express: ^4.17.1
+    express-graphql: ^0.12.0
     express-jwt: ^6.0.0
     express-jwt-authz: ^2.4.1
     express-jwt-permissions: ^1.3.3
-    jwks-rsa: ^1.12.3
+    graphql: ^15.5.0
+    graphql-compose: ^7.25.1
+    graphql-compose-mongoose: ^9.2.2
+    graphql-tag: ^2.12.3
+    jwks-rsa: ^2.0.2
     mongoose: ^5.12.3
     ts-node: ^9.1.1
     ts-node-dev: ^1.1.6
-    typescript: ^4.2.3
+    typescript: ^4.2.4
   languageName: unknown
   linkType: soft
 
@@ -5810,6 +5961,13 @@ fsevents@~2.3.1:
   version: 1.1.1
   resolution: "setprototypeof@npm:1.1.1"
   checksum: 0efed4da5aec7535828ac07c3b560f0a54257a4a7d5390ffabe5530a083974aef577651507974215edb92a51efa142f22fb3242e24d630ba6adcbfc9e7f1ff2b
+  languageName: node
+  linkType: hard
+
+"setprototypeof@npm:1.2.0":
+  version: 1.2.0
+  resolution: "setprototypeof@npm:1.2.0"
+  checksum: 72691439857719aa33ec11ebc97960347f0f96e75c2fe65d0f2ca5c9c44fb1aa026e2ae528959624ed3ae3820fe06bfb1aded306402c5c941afd3dfdf47f79d0
   languageName: node
   linkType: hard
 
@@ -6391,6 +6549,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"tslib@npm:^2.1.0":
+  version: 2.2.0
+  resolution: "tslib@npm:2.2.0"
+  checksum: 2d35468c470410871c5246e43f12dcb6d0fc363b617c176f26443b9530e5c5ee8448966892a42956168d8f495da7865bda33dfe82c26c91991e28999974a618f
+  languageName: node
+  linkType: hard
+
 "tsutils@npm:^3.17.1":
   version: 3.21.0
   resolution: "tsutils@npm:3.21.0"
@@ -6435,7 +6600,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-typescript@^4.2.3:
+typescript@^4.2.4:
   version: 4.2.4
   resolution: "typescript@npm:4.2.4"
   bin:
@@ -6445,7 +6610,7 @@ typescript@^4.2.3:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.2.3#builtin<compat/typescript>":
+"typescript@patch:typescript@^4.2.4#builtin<compat/typescript>":
   version: 4.2.4
   resolution: "typescript@patch:typescript@npm%3A4.2.4#builtin<compat/typescript>::version=4.2.4&hash=a45b0e"
   bin:

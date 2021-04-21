@@ -17,3 +17,9 @@ export default jwt({
   issuer: `https://dev-z9ydxjd6.eu.auth0.com/`,
   algorithms: ['RS256'],
 });
+
+export const jwtDummy = (req, res, next) => {
+  req.user = { sub: 'testUserID', permissions: ['read:5esrd'] };
+
+  next();
+};
