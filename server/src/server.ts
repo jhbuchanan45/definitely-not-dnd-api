@@ -49,11 +49,17 @@ app.use('/api/item', checkJwt, itemRoutes);
 
 import userSchema from './routes/userGraphQL';
 import campaignSchema from './routes/campaignGraphQL';
+import itemSchema from './routes/itemGraphQL';
+import tokenSchema from './routes/tokenGraphQL';
+import pClassSchema from './routes/pClassGraphQL';
 import { schemaComposer } from 'graphql-compose';
 // schema build for graphql
 
 schemaComposer.merge(userSchema);
 schemaComposer.merge(campaignSchema);
+schemaComposer.merge(itemSchema);
+schemaComposer.merge(tokenSchema);
+schemaComposer.merge(pClassSchema);
 
 app.use(
   '/api/graphql',

@@ -1,17 +1,7 @@
 import { schemaComposer } from 'graphql-compose';
 import { CampaignTC } from '../schema/campaign';
 import { secureReadWrapper, secureWriteWrapper } from '../middlewares/rolePermissionsControl';
-import { Document } from 'mongoose';
-
-const createQuery = (next) => async (rp) => {
-  rp.beforeRecordMutate = async (doc: Document, resolveParams) => {
-    doc.set('ownerId', resolveParams.context.user.sub);
-
-    return doc;
-  };
-
-  return next(rp);
-};
+import { createQuery } from '../middlewares/mongooseComposeMiddlewares';
 
 const mutationOptionsDefault = {
   record: {
@@ -34,8 +24,8 @@ schemaComposer.Mutation.addFields({
     [`${cName}Create`]: CampaignTC.mongooseResolvers
       .createOne(mutationOptionsDefault)
       .wrapResolve(createQuery),
-    [`${cName}UpdateOne`]: CampaignTC.mongooseResolvers.updateOne(),
-    [`${cName}UpdateByID`]: CampaignTC.mongooseResolvers.updateById(),
+    [`${cName}UpdateOne`]: CampaignTC.mongooseResolvers.updateOne(mutationOptionsDefault),
+    [`${cName}UpdateByID`]: CampaignTC.mongooseResolvers.updateById(mutationOptionsDefault),
     [`${cName}RemoveByID`]: CampaignTC.mongooseResolvers.removeById(),
     [`${cName}RemoveOne`]: CampaignTC.mongooseResolvers.removeOne(),
   }),
