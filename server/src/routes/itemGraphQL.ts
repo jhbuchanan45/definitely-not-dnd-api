@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { ItemTC } from '../schema/item';
+import { ItemTC } from '../gqlSchema/item';
 import { secureReadWrapper, secureWriteWrapper } from '../middlewares/rolePermissionsControl';
 import { createQuery } from '../middlewares/mongooseComposeMiddlewares';
 

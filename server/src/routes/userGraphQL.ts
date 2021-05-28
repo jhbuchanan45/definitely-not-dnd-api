@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { UserTC } from '../schema/user';
+import { UserTC } from '../gqlSchema/user';
 import { secureRead } from '../middlewares/rolePermissionsControl';
 
 schemaComposer.Query.addFields({

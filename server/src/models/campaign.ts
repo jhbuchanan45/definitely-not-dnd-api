@@ -1,8 +1,29 @@
 import mongoose from 'mongoose';
-import { Campaign } from '@jhbuchanan45/dnd-models';
 import Token, { Player } from './token';
 import Map from './map';
-import User from './user';
+import { composeMongoose, ComposeMongooseOpts } from 'graphql-compose-mongoose';
+
+export const composeOpts: ComposeMongooseOpts = {
+  includeBaseDiscriminators: true,
+  includeNestedDiscriminators: true,
+};
+
+const Schema = mongoose.Schema;
+const CampaignSchema = new Schema(
+  {
+    ownerId: { type: String, index: true, required: true },
+    readIds: [{ type: String, default: [] }],
+    writeIds: [{ type: String, default: [] }],
+    template: { type: Boolean, default: false },
+    src: { type: String, default: 'homebrew' },
+
+    name: { type: String, required: true, default: '' },
+    image: { type: String, required: true, default: '' },
+    players: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Player' }],
+    lastMap: { type: mongoose.Schema.Types.ObjectId, ref: 'Map' },
+  },
+  { typePojoToMixed: false }
+);
 
 const updatePermissions = {
   save: async function (this: any) {
@@ -46,11 +67,13 @@ const updatePermissions = {
   },
 };
 
-Campaign.pre('save', updatePermissions.save);
+CampaignSchema.pre('save', updatePermissions.save);
 
-Campaign.pre('remove', updatePermissions.remove);
+CampaignSchema.pre('remove', updatePermissions.remove);
 
-export default mongoose.model('Campaign', Campaign);
+const Campaign = mongoose.model('Campaign', CampaignSchema);
+export default Campaign;
+export const CampaignTC = composeMongoose(Campaign, composeOpts);
 
 /* SPECIAL CASES
 

@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { ClassTC } from '../schema/pClass';
+import { ClassTC, ExtraClassTC } from '../gqlSchema/pClass';
 import { secureReadWrapper, secureWriteWrapper } from '../middlewares/rolePermissionsControl';
 import { createQuery } from '../middlewares/mongooseComposeMiddlewares';
 
@@ -16,6 +16,7 @@ schemaComposer.Query.addFields({
     [`${cName}ById`]: ClassTC.mongooseResolvers.findById({ lean: true }),
     [`${cName}Many`]: ClassTC.mongooseResolvers.findMany({ lean: true }),
     [`${cName}One`]: ClassTC.mongooseResolvers.findOne({ lean: true }),
+    [`extraClassMany`]: ExtraClassTC.mongooseResolvers.findMany({ lean: true }),
   }),
 });
 
@@ -28,6 +29,9 @@ schemaComposer.Mutation.addFields({
     [`${cName}UpdateByID`]: ClassTC.mongooseResolvers.updateById(mutationOptionsDefault),
     [`${cName}RemoveByID`]: ClassTC.mongooseResolvers.removeById(),
     [`${cName}RemoveOne`]: ClassTC.mongooseResolvers.removeOne(),
+    [`extraClassCreate`]: ExtraClassTC.mongooseResolvers
+      .createOne(mutationOptionsDefault)
+      .wrapResolve(createQuery),
   }),
 });
 

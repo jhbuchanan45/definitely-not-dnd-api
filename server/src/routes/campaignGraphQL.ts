@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { CampaignTC } from '../schema/campaign';
+import { CampaignTC } from '../gqlSchema/campaign';
 import { secureReadWrapper, secureWriteWrapper } from '../middlewares/rolePermissionsControl';
 import { createQuery } from '../middlewares/mongooseComposeMiddlewares';
 
